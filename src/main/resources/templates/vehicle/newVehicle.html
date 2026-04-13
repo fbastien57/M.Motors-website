@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/header :: header('Ajouter un véhicule - M.Motors')}"></head>
+
+<body>
+
+<!-- Navbar -->
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<!-- Hero -->
+<section class="bg-light text-center py-4 border-bottom">
+    <div class="container">
+        <h2 class="fw-bold">Ajouter un véhicule 🚗</h2>
+        <p class="text-muted">Remplissez les informations du véhicule pour l’ajouter à votre catalogue</p>
+    </div>
+</section>
+
+<!-- Form Section -->
+<section class="py-5">
+    <div class="container d-flex justify-content-center">
+
+        <div class="card shadow-sm border-0 w-100" style="max-width: 750px;">
+            <div class="card-body p-4">
+
+                <form th:action="@{/vehicles/create}" th:object="${vehicle}" method="post">
+
+                    <div class="row g-3">
+
+                        <!-- Brand -->
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Marque</label>
+                            <input type="text" class="form-control" th:field="*{brand}" placeholder="Ex: Peugeot">
+                        </div>
+
+                        <!-- Model -->
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Modèle</label>
+                            <input type="text" class="form-control" th:field="*{model}" placeholder="Ex: 208">
+                        </div>
+
+                        <!-- Year -->
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold">Année</label>
+                            <input type="number" class="form-control" th:field="*{year}" min="1900" max="2099">
+                        </div>
+
+                        <!-- Mileage -->
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold">Kilométrage</label>
+                            <input type="number" class="form-control" th:field="*{mileage}" min="0">
+                        </div>
+
+                        <!-- Available -->
+                        <div class="col-md-4 d-flex align-items-end">
+                            <div class="form-check mt-3">
+                                <input class="form-check-input" type="checkbox" th:field="*{available}">
+                                <label class="form-check-label fw-bold">Disponible</label>
+                            </div>
+                        </div>
+
+                        <!-- Fuel -->
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Type de carburant</label>
+                            <select class="form-select" th:field="*{fuelType}">
+                                <option value="ESSENCE">Essence</option>
+                                <option value="DIESEL">Diesel</option>
+                                <option value="ELECTRIC">Électrique</option>
+                                <option value="HYBRID">Hybride</option>
+                            </select>
+                        </div>
+
+                        <!-- Gearbox -->
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Boîte de vitesse</label>
+                            <select class="form-select" th:field="*{gearbox}">
+                                <option value="MANUAL">Manuelle</option>
+                                <option value="AUTOMATIC">Automatique</option>
+                                <option value="SEMI_AUTOMATIC">Semi-automatique</option>
+                            </select>
+                        </div>
+
+                        <!-- Description -->
+                        <div class="col-12">
+                            <label class="form-label fw-bold">Description</label>
+                            <textarea class="form-control" rows="4"
+                                      th:field="*{description}"
+                                      placeholder="Description du véhicule"></textarea>
+                        </div>
+
+                    </div>
+
+                    <!-- Buttons -->
+                    <div class="mt-4 d-flex justify-content-between align-items-center">
+
+                        <a href="/" class="btn btn-outline-secondary">
+                            Retour
+                        </a>
+
+                        <button type="submit" class="btn btn-primary px-4">
+                            Créer le véhicule
+                        </button>
+
+                    </div>
+
+                    <p class="text-muted small mt-3">
+                        👉 Vous pourrez ajouter les photos à l’étape suivante
+                    </p>
+
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- Footer -->
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+
+</body>
+</html>

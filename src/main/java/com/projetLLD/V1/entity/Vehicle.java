@@ -5,13 +5,13 @@ import com.projetLLD.V1.enums.GearBox;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "vehicles")
 @Getter
 @Setter
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Vehicle {
@@ -42,14 +42,14 @@ public class Vehicle {
     private String description;
 
     @Column(name = "is_available",nullable = false )
-    private boolean isAvailable = true;
+    private boolean available = true;
 
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
     @OneToMany(mappedBy = "vehicle", cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderBy("orderIndex ASC")
-    private List<VehiclePhoto> photos;
+    private List<VehiclePhoto> photos = new ArrayList<>();
 
     @PrePersist
     public void prePersist() {

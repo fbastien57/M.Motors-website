@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/header :: header('Modifier véhicule - M.Motors')}"></head>
+
+<body>
+
+<!-- Navbar -->
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<!-- Hero -->
+<section class="bg-light text-center py-4 border-bottom">
+    <div class="container">
+        <h2 class="fw-bold">Modifier véhicule 🚗</h2>
+        <p class="text-muted">
+            Mise à jour des informations et gestion des images
+        </p>
+    </div>
+</section>
+
+<!-- CONTENT -->
+<section class="py-5">
+    <div class="container">
+
+        <div class="row g-4">
+
+            <!-- LEFT: VEHICLE FORM -->
+            <div class="col-lg-6">
+
+                <div class="card shadow-sm border-0">
+                    <div class="card-body p-4">
+
+                        <h5 class="mb-3 fw-bold">Informations du véhicule</h5>
+
+                        <form th:action="@{/vehicles/update/{id}(id=${vehicle.id})}" method="post">
+
+                            <div class="row g-3">
+
+                                <!-- Brand -->
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold">Marque</label>
+                                    <input type="text" class="form-control"
+                                           name="brand"
+                                           th:value="${vehicle.brand}">
+                                </div>
+
+                                <!-- Model -->
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold">Modèle</label>
+                                    <input type="text" class="form-control"
+                                           name="model"
+                                           th:value="${vehicle.model}">
+                                </div>
+
+                                <!-- Year -->
+                                <div class="col-md-4">
+                                    <label class="form-label fw-bold">Année</label>
+                                    <input type="number" class="form-control"
+                                           name="year"
+                                           th:value="${vehicle.year}">
+                                </div>
+
+                                <!-- Mileage -->
+                                <div class="col-md-4">
+                                    <label class="form-label fw-bold">Kilométrage</label>
+                                    <input type="number" class="form-control"
+                                           name="mileage"
+                                           th:value="${vehicle.mileage}">
+                                </div>
+
+                                <!-- Available -->
+                                <div class="col-md-4 d-flex align-items-end">
+                                    <div class="form-check">
+                                        <input class="form-check-input"
+                                               type="checkbox"
+                                               name="available"
+                                               th:checked="${vehicle.available}">
+                                        <label class="form-check-label fw-bold">Disponible</label>
+                                    </div>
+                                </div>
+
+                                <!-- Fuel -->
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold">Carburant</label>
+                                    <select class="form-select" name="fuelType">
+                                        <option th:selected="${vehicle.fuelType == 'ESSENCE'}" value="ESSENCE">Essence</option>
+                                        <option th:selected="${vehicle.fuelType == 'DIESEL'}" value="DIESEL">Diesel</option>
+                                        <option th:selected="${vehicle.fuelType == 'ELECTRIC'}" value="ELECTRIC">Électrique</option>
+                                        <option th:selected="${vehicle.fuelType == 'HYBRID'}" value="HYBRID">Hybride</option>
+                                    </select>
+                                </div>
+
+                                <!-- Gearbox -->
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold">Boîte de vitesse</label>
+                                    <select class="form-select" name="gearbox">
+                                        <option th:selected="${vehicle.gearbox == 'MANUAL'}" value="MANUAL">Manuelle</option>
+                                        <option th:selected="${vehicle.gearbox == 'AUTOMATIC'}" value="AUTOMATIC">Automatique</option>
+                                        <option th:selected="${vehicle.gearbox == 'SEMI_AUTOMATIC'}" value="SEMI_AUTOMATIC">Semi-auto</option>
+                                    </select>
+                                </div>
+
+                                <!-- Description -->
+                                <div class="col-12">
+                                    <label class="form-label fw-bold">Description</label>
+                                    <textarea class="form-control"
+                                              name="description"
+                                              rows="4"
+                                              th:text="${vehicle.description}"></textarea>
+                                </div>
+
+                            </div>
+
+                            <button type="submit" class="btn btn-primary w-100 mt-3">
+                                Mettre à jour
+                            </button>
+
+                        </form>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- RIGHT: IMAGES -->
+            <div class="col-lg-6">
+
+                <!-- UPLOAD -->
+                <div class="card shadow-sm border-0 mb-4">
+                    <div class="card-body p-4">
+
+                        <h5 class="mb-3 fw-bold">Ajouter des images</h5>
+
+                        <form th:action="@{/vehicles/{id}/upload-images(id=${vehicle.id})}"
+                              method="post"
+                              enctype="multipart/form-data">
+
+                            <input type="file" class="form-control mb-3"
+                                   name="files" multiple>
+
+                            <button type="submit" class="btn btn-success w-100">
+                                Upload images
+                            </button>
+
+                        </form>
+
+                    </div>
+                </div>
+
+                <!-- IMAGES LIST -->
+                <div class="card shadow-sm border-0">
+
+                    <div class="card-body p-4">
+
+                        <h5 class="mb-3 fw-bold">Photos du véhicule</h5>
+
+                        <div class="col-6" th:each="photo : ${vehicle.photos}">
+
+                            <div class="position-relative border rounded overflow-hidden shadow-sm">
+
+                                <!-- image -->
+                                <img th:src="@{'/' + ${photo.filePath}}"
+                                     class="img-fluid"
+                                     style="height: 140px; object-fit: cover;">
+
+                                <!-- delete button -->
+                                <form th:action="@{/vehicles/{vehicleId}/photos/{photoId}/delete(vehicleId=${vehicle.id}, photoId=${photo.id})}"
+                                      method="post"
+                                      class="position-absolute top-0 end-0 m-1">
+
+                                    <button class="btn btn-sm btn-danger">
+                                        ✕
+                                    </button>
+
+                                </form>
+
+                            </div>
+
+                        </div>
+
+                        <p class="text-muted small mt-3">
+                            👉 Les images sont utilisées pour la présentation du véhicule
+                        </p>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+<form th:action="@{/vehicles/{id}/delete(id=${vehicle.id})}"
+      method="post"
+      onsubmit="return confirm('Supprimer ce véhicule ?');">
+
+    <button class="btn btn-danger w-100 mt-3">
+        Supprimer le véhicule
+    </button>
+
+</form>
+
+<!-- Footer -->
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+
+</body>
+</html>

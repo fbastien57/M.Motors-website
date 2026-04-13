@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: header('Accueil - M.Motors')}"></head>
+
+<body>
+<!-- Navbar -->
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<!-- Hero Section -->
+<section class="bg-light text-center py-5">
+    <div class="container">
+        <h1 class="display-4 fw-bold">Trouvez la voiture de vos rêves ! 🚗</h1>
+        <p class="lead text-muted">Vente et LOA de véhicules d'occasion, inspectés et prêts à partir.</p>
+    </div>
+</section>
+
+<!-- Services / CTA avec 2 cartes cliquables -->
+<section id="services" class="py-5">
+    <div class="container">
+        <div class="row g-4 justify-content-center">
+
+            <!-- Achat Occasion -->
+            <div class="col-md-6">
+                <a href="/voitures" class="text-decoration-none">
+                    <div class="card h-100 shadow-sm border-0 hover-scale">
+                        <img src="../image/pexels-lylian-botte-1098622215-20869390.jpg" class="card-img-top" alt="Achat voitures d'occasion">
+                        <div class="card-body text-center bg-primary text-light">
+                            <h4 class="card-title fw-bold">Vente de voitures d'occasion</h4>
+                            <p class="card-text">Découvrez notre sélection de véhicules fiables et garantis.</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- LOA Occasion -->
+            <div class="col-md-6">
+                <a href="/loa" class="text-decoration-none">
+                    <div class="card h-100 shadow-sm border-0 hover-scale">
+                        <img src="../image/pexels-mikebirdy-18393156.jpg" class="card-img-top" alt="LOA voitures d'occasion">
+                        <div class="card-body text-center bg-success text-light">
+                            <h4 class="card-title fw-bold">LOA d'occasion</h4>
+                            <p class="card-text">Louez votre voiture facilement avec nos offres flexibles.</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action -->
+<section class="py-5 text-center bg-light">
+    <div class="container">
+        <h3 class="mb-3">Prêt à trouver votre voiture ?</h3>
+        <p class="text-muted mb-4">Parcourez notre catalogue et contactez nos conseillers pour un essai.</p>
+    </div>
+</section>
+<!-- Trois Box Infos -->
+<section class="py-5">
+    <div class="container">
+        <div class="row g-4 text-center">
+
+            <!-- Box 1 : Nos services -->
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm border-0 hover-scale">
+                    <img src="../image/pexels-gustavo-fring-6870298.JPG" class="card-img-top" alt="Inspection véhicules">
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold">Véhicules inspectés</h5>
+                        <p class="card-text text-muted">Chaque voiture est minutieusement inspectée pour garantir sécurité et fiabilité.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Box 2 : Assistance -->
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm border-0 hover-scale">
+                    <img src="../image/pexels-gustavo-fring-4895413.JPG" class="card-img-top" alt="Assistance et conseils">
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold">Conseils personnalisés</h5>
+                        <p class="card-text text-muted">Nos conseillers vous accompagnent pour choisir le véhicule adapté à vos besoins.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Box 3 : Financement -->
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm border-0 hover-scale">
+                    <img src="../image/pexels-silverkblack-36729881.JPG" class="card-img-top" alt="Financement et LOA">
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold">Financement et LOA</h5>
+                        <p class="card-text text-muted">Profitez de nos solutions flexibles pour acheter ou louer votre voiture en toute sérénité.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+<!-- Bootstrap JS -->
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+
+<!-- Styles supplémentaires pour hover effet -->
+<style>
+    .hover-scale {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .hover-scale:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+</style>
+
+</body>
+</html>

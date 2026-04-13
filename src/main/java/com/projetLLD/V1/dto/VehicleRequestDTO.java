@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -37,8 +38,6 @@ public class VehicleRequestDTO {
     @Size(max = 1000)
     private String description;
 
-    private boolean isAvailable;
-
-    private List<VehiclePhotoDTO> photos;
+    private boolean available;
 
 }
