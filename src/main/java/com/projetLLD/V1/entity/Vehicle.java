@@ -54,6 +54,9 @@ public class Vehicle {
     @OneToOne(mappedBy = "vehicle", cascade = CascadeType.ALL, orphanRemoval = true)
     private VehicleSale sale;
 
+    @OneToOne(mappedBy = "vehicle", cascade = CascadeType.ALL, orphanRemoval = true)
+    private VehicleRental rental;
+
     @PrePersist
     public void prePersist() {
         this.createdAt = LocalDateTime.now();

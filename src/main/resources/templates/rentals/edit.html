@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/header :: header('Modifier une offre LOA - M.Motors')}"></head>
+
+<body>
+
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<!-- TITLE -->
+<section class="bg-light text-center py-4 border-bottom">
+    <div class="container">
+        <h2 class="fw-bold">Modifier une offre LOA ✏️</h2>
+        <p class="text-muted">Ajustez les paramètres de location</p>
+    </div>
+</section>
+
+<!-- FORM -->
+<section class="py-5">
+    <div class="container d-flex justify-content-center">
+
+        <div class="card shadow-sm border-0 w-100" style="max-width: 650px;">
+            <div class="card-body p-4">
+
+                <form th:action="@{/rentals/{id}/edit(id=${rentalId})}"
+                      th:object="${rental}"
+                      method="post">
+
+                    <!-- 💰 prix -->
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Prix véhicule (€)</label>
+                        <input type="number"
+                               class="form-control"
+                               th:field="*{vehiclePrice}">
+                    </div>
+
+                    <!-- 💰 apport -->
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Apport (€)</label>
+                        <input type="number"
+                               class="form-control"
+                               th:field="*{deposit}">
+                    </div>
+
+                    <!-- 💰 mensualité -->
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Mensualité de base (€)</label>
+                        <input type="number"
+                               class="form-control"
+                               th:field="*{baseMonthlyPayment}">
+                    </div>
+
+                    <!-- disponible -->
+                    <div class="form-check mb-3">
+                        <input type="checkbox"
+                               class="form-check-input"
+                               th:field="*{available}">
+                        <label class="form-check-label">Disponible</label>
+                    </div>
+
+                    <!-- BUTTONS -->
+                    <div class="mt-4 d-flex justify-content-between">
+
+                        <a th:href="@{/vehicles}"
+                           class="btn btn-outline-secondary">
+                            Retour
+                        </a>
+
+                        <button class="btn btn-primary px-4">
+                            Sauvegarder
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+
+</body>
+</html>

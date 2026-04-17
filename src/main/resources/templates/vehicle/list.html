@@ -68,14 +68,15 @@
                         </span>
 
                         <!-- EDIT BUTTON -->
-                        <div class="mt-3">
+                        <div class="mt-3 d-grid gap-2">
 
                             <a th:href="@{/vehicles/{id}/edit(id=${vehicle.id})}"
                                class="btn btn-primary w-100">
                                 Modifier
                             </a>
+
                             <a th:href="@{/vehicles/{id}/sales(id=${vehicle.id})}"
-                               class="btn btn-outline-primary btn-sm">
+                               class="btn btn-outline-primary w-100">
                                 Voir les offres
                             </a>
 

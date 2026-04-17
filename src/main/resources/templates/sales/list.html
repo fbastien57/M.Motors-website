@@ -19,55 +19,65 @@
 <!-- 💰 OFFRES DE VENTE -->
 <!-- ===================== -->
 
-<section class="py-4">
+<section class="py-5">
     <div class="container">
 
-        <h4 class="fw-bold mb-3">💰 Offres de vente</h4>
+        <div class="row">
 
-        <div th:if="${#lists.isEmpty(sales)}" class="text-center mb-3">
-            <a th:href="@{/vehicles/{id}/sales/new(id=${vehicleId})}"
-               class="btn btn-success px-4 py-2 shadow-sm">
-                ➕ Ajouter une offre de vente
-            </a>
-        </div>
+            <!-- ===================== -->
+            <!-- 💰 VENTES (GAUCHE) -->
+            <!-- ===================== -->
+            <div class="col-md-6 border-end pe-4 text-center">
 
-        <div class="row g-4">
+                <h4 class="fw-bold mb-3 mt-3">💰 Offres de vente</h4>
 
-            <div class="col-md-4" th:each="sale : ${sales}">
+                <!-- bouton centré -->
+                <div th:if="${#lists.isEmpty(sales)}" class="mb-4">
+                    <a th:href="@{/vehicles/{id}/sales/new(id=${vehicleId})}"
+                       class="btn btn-success px-4 py-2 shadow-sm">
+                        ➕ Ajouter une offre de vente
+                    </a>
+                </div>
 
-                <div class="card h-100 shadow-sm border-0 hover-scale">
+                <div class="row g-3">
 
-                    <div class="card-body text-center">
+                    <div class="col-12" th:each="sale : ${sales}">
 
-                        <h5 class="fw-bold"
-                            th:text="${sale.salePrice + ' €'}"></h5>
+                        <div class="card shadow-sm border-0 hover-scale">
 
-                        <p class="text-muted">Vente</p>
+                            <div class="card-body text-center">
 
-                        <span class="badge bg-success" th:if="${sale.available}">
-                            Disponible
-                        </span>
+                                <h5 class="fw-bold"
+                                    th:text="${sale.salePrice + ' €'}"></h5>
 
-                        <span class="badge bg-secondary" th:if="${!sale.available}">
-                            Indisponible
-                        </span>
+                                <span class="badge bg-success" th:if="${sale.available}">
+                        Disponible
+                    </span>
 
-                        <div class="mt-3 d-grid gap-2">
+                                <span class="badge bg-secondary" th:if="${!sale.available}">
+                        Indisponible
+                    </span>
 
-                            <a th:href="@{/sales/{id}/edit(id=${sale.id})}"
-                               class="btn btn-primary">
-                                Modifier
-                            </a>
+                                <div class="mt-3 d-grid gap-2">
 
-                            <form th:action="@{/sales/{id}/delete(id=${sale.id})}"
-                                  method="post"
-                                  onsubmit="return confirm('Supprimer cette offre ?');">
+                                    <a th:href="@{/sales/{id}/edit(id=${sale.id})}"
+                                       class="btn btn-primary btn-sm">
+                                        Modifier
+                                    </a>
 
-                                <button class="btn btn-danger w-100">
-                                    Supprimer
-                                </button>
+                                    <form th:action="@{/sales/{id}/delete(id=${sale.id})}"
+                                          method="post"
+                                          onsubmit="return confirm('Supprimer cette offre ?');">
 
-                            </form>
+                                        <button class="btn btn-danger btn-sm w-100">
+                                            Supprimer
+                                        </button>
+
+                                    </form>
+
+                                </div>
+
+                            </div>
 
                         </div>
 
@@ -77,64 +87,76 @@
 
             </div>
 
-        </div>
+            <!-- ===================== -->
+            <!-- 🚗 LOCATION (DROITE) -->
+            <!-- ===================== -->
+            <div class="col-md-6 ps-4 text-center">
 
-    </div>
-</section>
+                <h4 class="fw-bold mb-3 mt-3">🚗 Offres de location (LOA)</h4>
 
-<!-- ===================== -->
-<!-- 🚗 OFFRES DE LOCATION -->
-<!-- ===================== -->
+                <!-- bouton centré -->
+                <div th:if="${#lists.isEmpty(rentals)}" class="mb-4">
+                    <a th:href="@{/vehicles/{id}/rentals/new(id=${vehicleId})}"
+                       class="btn btn-warning px-4 py-2 shadow-sm">
+                        ➕ Ajouter une offre de location
+                    </a>
+                </div>
 
-<section class="py-4 bg-light">
-    <div class="container">
+                <div class="row g-3">
 
-        <h4 class="fw-bold mb-3">🚗 Offres de location</h4>
+                    <div class="col-12" th:each="rental : ${rentals}">
 
-        <div th:if="${#lists.isEmpty(rentals)}" class="text-center mb-3">
-            <a th:href="@{/vehicles/{id}/rentals/new(id=${vehicleId})}"
-               class="btn btn-warning px-4 py-2 shadow-sm">
-                ➕ Ajouter une offre de location
-            </a>
-        </div>
+                        <div class="card shadow-sm border-0 hover-scale">
 
-        <div class="row g-4">
+                            <div class="card-body text-center">
 
-            <div class="col-md-4" th:each="rental : ${rentals}">
+                                <h5 class="fw-bold"
+                                    th:text="${rental.vehiclePrice + ' €'}"></h5>
 
-                <div class="card h-100 shadow-sm border-0 hover-scale">
+                                <p class="text-muted mb-1">
+                                    <span th:text="${rental.baseMonthlyPayment}"></span> € / mois
+                                </p>
 
-                    <div class="card-body text-center">
+                                <p class="text-muted small mb-1">
+                                    Durées :
+                                    <span th:each="d : ${rental.allowedDurations}"
+                                          th:text="${d.months + 'm '}"></span>
+                                </p>
 
-                        <h5 class="fw-bold"
-                            th:text="${rental.pricePerDay + ' € / jour'}"></h5>
+                                <p class="text-muted small">
+                                    Km :
+                                    <span th:each="k : ${rental.allowedKmPerYear}"
+                                          th:text="${k.km + 'km '}"></span>
+                                </p>
 
-                        <p class="text-muted">Location</p>
+                                <span class="badge bg-success" th:if="${rental.available}">
+                        Disponible
+                    </span>
 
-                        <span class="badge bg-success" th:if="${rental.available}">
-                            Disponible
-                        </span>
+                                <span class="badge bg-secondary" th:if="${!rental.available}">
+                        Indisponible
+                    </span>
 
-                        <span class="badge bg-secondary" th:if="${!rental.available}">
-                            Indisponible
-                        </span>
+                                <div class="mt-3 d-grid gap-2">
 
-                        <div class="mt-3 d-grid gap-2">
+                                    <a th:href="@{/rentals/{id}/edit(id=${rental.id})}"
+                                       class="btn btn-primary btn-sm">
+                                        Modifier
+                                    </a>
 
-                            <a th:href="@{/rentals/{id}/edit(id=${rental.id})}"
-                               class="btn btn-primary">
-                                Modifier
-                            </a>
+                                    <form th:action="@{/rentals/{id}/delete(id=${rental.id})}"
+                                          method="post"
+                                          onsubmit="return confirm('Supprimer cette location ?');">
 
-                            <form th:action="@{/rentals/{id}/delete(id=${rental.id})}"
-                                  method="post"
-                                  onsubmit="return confirm('Supprimer cette location ?');">
+                                        <button class="btn btn-danger btn-sm w-100">
+                                            Supprimer
+                                        </button>
 
-                                <button class="btn btn-danger w-100">
-                                    Supprimer
-                                </button>
+                                    </form>
 
-                            </form>
+                                </div>
+
+                            </div>
 
                         </div>
 

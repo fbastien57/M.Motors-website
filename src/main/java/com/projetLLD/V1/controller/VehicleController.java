@@ -5,6 +5,7 @@ import com.projetLLD.V1.dto.VehicleRequestDTO;
 import com.projetLLD.V1.dto.VehicleSaleCreateDTO;
 import com.projetLLD.V1.entity.Vehicle;
 import com.projetLLD.V1.repository.VehicleSaleRepository;
+import com.projetLLD.V1.service.VehicleRentalService;
 import com.projetLLD.V1.service.VehicleSaleService;
 import com.projetLLD.V1.service.VehicleService;
 import jakarta.validation.Valid;
@@ -24,6 +25,7 @@ public class VehicleController {
 
     private final VehicleService vehicleService;
     private final VehicleSaleService vehicleSaleService;
+    private final VehicleRentalService vehicleRentalService;
 
     @GetMapping
     public String listVehicles(Model model) {
@@ -99,9 +101,14 @@ public class VehicleController {
         return "redirect:/vehicles/" + vehicleId + "/edit";
     }
 
+
+
+
+
     @GetMapping("/{id}/sales")
     public String listSales(@PathVariable Long id, Model model) {
 
+        model.addAttribute("rentals" , vehicleRentalService.getRentalByVehicle(id));
         model.addAttribute("sales", vehicleSaleService.getSalesByVehicle(id));
         model.addAttribute("vehicleId", id);
 
