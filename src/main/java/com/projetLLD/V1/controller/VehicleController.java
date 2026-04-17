@@ -2,7 +2,10 @@ package com.projetLLD.V1.controller;
 
 
 import com.projetLLD.V1.dto.VehicleRequestDTO;
+import com.projetLLD.V1.dto.VehicleSaleCreateDTO;
 import com.projetLLD.V1.entity.Vehicle;
+import com.projetLLD.V1.repository.VehicleSaleRepository;
+import com.projetLLD.V1.service.VehicleSaleService;
 import com.projetLLD.V1.service.VehicleService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +23,7 @@ import java.util.List;
 public class VehicleController {
 
     private final VehicleService vehicleService;
+    private final VehicleSaleService vehicleSaleService;
 
     @GetMapping
     public String listVehicles(Model model) {
@@ -93,5 +97,42 @@ public class VehicleController {
         vehicleService.deletePhoto(vehicleId, photoId);
 
         return "redirect:/vehicles/" + vehicleId + "/edit";
+    }
+
+    @GetMapping("/{id}/sales")
+    public String listSales(@PathVariable Long id, Model model) {
+
+        model.addAttribute("sales", vehicleSaleService.getSalesByVehicle(id));
+        model.addAttribute("vehicleId", id);
+
+        return "sales/list";
+    }
+
+    @GetMapping("/{id}/sales/new")
+    public String showCreateForm(@PathVariable Long id, Model model) {
+
+        model.addAttribute("sale", new VehicleSaleCreateDTO());
+        model.addAttribute("vehicleId", id);
+
+        return "sales/form";
+    }
+
+    @PostMapping("/{id}/sales")
+    public String createSale(@PathVariable Long id,
+                             @Valid @ModelAttribute("sale") VehicleSaleCreateDTO dto,
+                             BindingResult result) {
+
+        if (result.hasErrors()) {
+            return "sales/form";
+        }
+
+        try {
+            vehicleSaleService.createSale(id, dto);
+        } catch (RuntimeException e) {
+            result.reject("error.sale", e.getMessage());
+            return "sales/form";
+        }
+
+        return "redirect:/vehicles";
     }
 }

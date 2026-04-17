@@ -51,6 +51,9 @@ public class Vehicle {
     @OrderBy("orderIndex ASC")
     private List<VehiclePhoto> photos = new ArrayList<>();
 
+    @OneToOne(mappedBy = "vehicle", cascade = CascadeType.ALL, orphanRemoval = true)
+    private VehicleSale sale;
+
     @PrePersist
     public void prePersist() {
         this.createdAt = LocalDateTime.now();

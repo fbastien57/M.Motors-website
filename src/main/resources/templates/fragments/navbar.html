@@ -4,7 +4,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
         <!-- Logo à gauche -->
-        <a class="navbar-brand fw-bold" href="#" th:text="'M.Motors'">M.Motors</a>
+        <a class="navbar-brand fw-bold" th:href="@{/}" th:text="'M.Motors'">M.Motors</a>
 
         <!-- Bouton toggle pour mobile -->
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
@@ -16,13 +16,16 @@
         <div class="collapse navbar-collapse justify-content-end" id="mainNavbar">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="#" th:text="'Accueil'">Accueil</a>
+                    <a class="nav-link" th:href="@{/}" th:text="'Accueil'">Accueil</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#" th:text="'Véhicules'">Véhicules</a>
+                    <a class="nav-link" th:href="@{/vehicles}" th:text="'Véhicules'">Véhicules</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#" th:text="'LOA'">LOA</a>
+                    <a class="nav-link" href="#" th:text="'Achat'">Achat</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" th:text="'Location'">Location</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#" th:text="'À propos'">À propos</a>

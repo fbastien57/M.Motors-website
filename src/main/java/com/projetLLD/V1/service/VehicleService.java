@@ -146,7 +146,6 @@ public class VehicleService {
             }
         }
 
-        // 2. supprimer en base (cascade supprime photos automatiquement)
         vehicleRepository.delete(vehicle);
     }
 }

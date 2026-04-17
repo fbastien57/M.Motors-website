@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/header :: header('Créer une offre - M.Motors')}"></head>
+
+<body>
+
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<!-- TITLE -->
+<section class="bg-light text-center py-4 border-bottom">
+    <div class="container">
+        <h2 class="fw-bold">Créer une offre 💰</h2>
+        <p class="text-muted">Définissez le prix de vente</p>
+    </div>
+</section>
+
+<!-- FORM -->
+<section class="py-5">
+    <div class="container d-flex justify-content-center">
+
+        <div class="card shadow-sm border-0 w-100" style="max-width: 600px;">
+            <div class="card-body p-4">
+
+                <form th:action="@{/vehicles/{id}/sales(id=${vehicleId})}"
+                      th:object="${sale}"
+                      method="post">
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Prix (€)</label>
+                        <input type="number"
+                               th:field="*{salePrice}"
+                               class="form-control"
+                               placeholder="Ex: 15000">
+                        <div class="text-danger" th:errors="*{salePrice}"></div>
+                    </div>
+
+                    <div class="mt-4 d-flex justify-content-between">
+
+                        <a th:href="@{/vehicles/{id}/sales(id=${vehicleId})}"
+                           class="btn btn-outline-secondary">
+                            Retour
+                        </a>
+
+                        <button class="btn btn-success px-4">
+                            Créer
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+
+</body>
+</html>

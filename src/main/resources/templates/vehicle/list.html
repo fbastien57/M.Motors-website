@@ -16,6 +16,12 @@
     </div>
 </section>
 
+<div class="mt-4 d-flex justify-content-center">
+    <a th:href="@{/vehicles/new}" class="btn btn-success px-4 py-2 fw-semibold shadow-sm">
+        ➕ Ajouter un véhicule
+    </a>
+</div>
+
 <!-- LIST -->
 <section class="py-5">
     <div class="container">
@@ -67,6 +73,10 @@
                             <a th:href="@{/vehicles/{id}/edit(id=${vehicle.id})}"
                                class="btn btn-primary w-100">
                                 Modifier
+                            </a>
+                            <a th:href="@{/vehicles/{id}/sales(id=${vehicle.id})}"
+                               class="btn btn-outline-primary btn-sm">
+                                Voir les offres
                             </a>
 
                         </div>
