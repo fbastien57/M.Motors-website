@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/header :: header('Options - M.Motors')}"></head>
+
+<body>
+
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<!-- TITLE -->
+<section class="bg-light text-center py-4 border-bottom">
+    <div class="container">
+        <h2 class="fw-bold">Options & Garanties ⚙️</h2>
+        <p class="text-muted">Options disponibles pour ce véhicule</p>
+    </div>
+</section>
+
+<!-- CONTENT -->
+<section class="py-5">
+    <div class="container">
+
+        <!-- ADD BUTTON -->
+        <div class="text-center mb-4">
+            <a th:href="@{/vehicles/{id}/options/new(id=${vehicleId})}"
+               class="btn btn-primary px-4 py-2 shadow-sm">
+                ➕ Ajouter une option
+            </a>
+        </div>
+
+        <div class="row g-4">
+
+            <div class="col-md-4" th:each="option : ${options}">
+
+                <div class="card shadow-sm border-0 hover-scale h-100">
+
+                    <div class="card-body text-center">
+
+                        <h5 class="fw-bold" th:text="${option.name}"></h5>
+
+                        <span class="badge bg-info mb-2"
+                              th:text="${option.type}"></span>
+
+                        <h6 class="text-success fw-bold"
+                            th:text="${option.price + ' €'}"></h6>
+
+                        <p class="text-muted small"
+                           th:text="${option.description}"></p>
+
+                        <div class="mt-3 d-grid gap-2">
+
+                            <a th:href="@{/vehicles/{vehicleId}/options/{id}/edit(vehicleId=${vehicleId}, id=${option.id})}"
+                               class="btn btn-primary btn-sm">
+                                Modifier
+                            </a>
+
+                            <form th:action="@{/vehicles/{vehicleId}/options/{id}/delete(vehicleId=${vehicleId}, id=${option.id})}"
+                                  method="post"
+                                  onsubmit="return confirm('Supprimer cette option ?');">
+
+                                <button class="btn btn-danger btn-sm w-100">
+                                    Supprimer
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- EMPTY STATE -->
+        <div th:if="${#lists.isEmpty(options)}" class="text-center mt-5">
+            <p class="text-muted">Aucune option ajoutée</p>
+        </div>
+
+    </div>
+</section>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+
+<style>
+    .hover-scale {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .hover-scale:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+</style>
+
+</body>
+</html>

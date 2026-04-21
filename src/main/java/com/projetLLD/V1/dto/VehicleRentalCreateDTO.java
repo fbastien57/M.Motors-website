@@ -19,7 +19,6 @@ public class VehicleRentalCreateDTO {
 
     private Double deposit;
 
-    // 💰 base mensualité (optionnelle si tu veux la forcer côté admin)
     @Positive
     private Double baseMonthlyPayment;
 

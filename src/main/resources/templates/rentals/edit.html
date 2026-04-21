@@ -50,6 +50,39 @@
                                th:field="*{baseMonthlyPayment}">
                     </div>
 
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Durées disponibles</label>
+                        <div class="form-check"
+                             th:each="d : ${T(com.projetLLD.V1.enums.RentalDuration).values()}">
+
+                            <input type="checkbox"
+                                   th:value="${d}"
+                                   th:field="*{allowedDurations}"
+                                   class="form-check-input">
+
+                            <label class="form-check-label"
+                                   th:text="${d.months + ' mois'}">
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- 🚗 km -->
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Kilométrage annuel</label>
+                        <div class="form-check"
+                             th:each="k : ${T(com.projetLLD.V1.enums.AnnualMileage).values()}">
+
+                            <input type="checkbox"
+                                   th:value="${k}"
+                                   th:field="*{allowedKmPerYear}"
+                                   class="form-check-input">
+
+                            <label class="form-check-label"
+                                   th:text="${k.km + ' km'}">
+                            </label>
+                        </div>
+                    </div>
+
                     <!-- disponible -->
                     <div class="form-check mb-3">
                         <input type="checkbox"
