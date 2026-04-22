@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/header :: header('Détail véhicule - M.Motors')}">
+    <link rel="stylesheet" th:href="@{/css/details.css}">
+</head>
+
+<body>
+
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<!-- TITLE -->
+<section class="bg-light py-4 border-bottom">
+    <div class="container">
+        <h2 class="fw-bold"
+            th:text="${vehicle.brand + ' ' + vehicle.model}"></h2>
+        <p class="text-muted">
+            <span th:text="${vehicle.year}"></span> •
+            <span th:text="${vehicle.mileage}"></span> km
+        </p>
+    </div>
+</section>
+
+<!-- CONTENT -->
+<section class="py-5">
+    <div class="container">
+
+        <div class="row g-4">
+
+            <!-- 🖼️ IMAGES -->
+            <div class="col-md-7">
+
+                <!-- IMAGE PRINCIPALE -->
+                <img id="mainImage"
+                     th:src="${vehicle.photos.isEmpty()} ? '/image/default-car.jpg' : '/' + ${vehicle.photos[0].filePath}"
+                     class="img-fluid rounded shadow-sm mb-3 main-image">
+                <!-- MINIATURES -->
+                <div class="d-flex gap-2 flex-wrap">
+                    <img th:each="photo : ${vehicle.photos}"
+                         th:src="@{'/' + ${photo.filePath}}"
+                         class="thumb"
+                         style="width:100px; height:70px; object-fit:cover; cursor:pointer;">
+                </div>
+
+            </div>
+
+            <!-- 📊 INFOS -->
+            <div class="col-md-5">
+
+                <div class="card shadow-sm border-0 p-3">
+
+                    <!-- 💰 VENTE -->
+                    <div th:if="${vehicle.sale != null}">
+
+                        <h3 class="text-success fw-bold"
+                            th:text="${vehicle.sale.salePrice + ' €'}"></h3>
+
+                        <span class="badge bg-success"
+                              th:if="${vehicle.sale.available}">
+                            Disponible
+                        </span>
+
+                    </div>
+
+                    <!-- 🚗 LOCATION -->
+                    <div th:if="${vehicle.rental != null}">
+
+                        <h3 class="text-warning fw-bold">
+                            A partir de <span th:text="${vehicle.rental.baseMonthlyPayment}"></span> € / mois
+                        </h3>
+
+                        <p class="small text-muted">
+                            Durées :
+                            <span th:each="d : ${vehicle.rental.allowedDurations}"
+                                  th:text="${d.months + 'm '}"></span>
+                        </p>
+
+                        <p class="text-muted small">
+                            km :
+                            <span th:each="k : ${vehicle.rental.allowedKmPerYear}"
+                                  th:text="${k.km + 'km '}"></span>
+                        </p>
+
+                    </div>
+
+                    <hr>
+
+                    <!-- CARACTÉRISTIQUES -->
+                    <ul class="list-unstyled">
+                        <li><strong>Carburant :</strong> <span th:text="${vehicle.fuelType}"></span></li>
+                        <li><strong>Boîte :</strong> <span th:text="${vehicle.gearbox}"></span></li>
+                        <li><strong>Kilométrage :</strong> <span th:text="${vehicle.mileage}"></span> km</li>
+                    </ul>
+
+                    <hr>
+
+                    <!-- CTA -->
+                    <button class="btn btn-dark w-100">
+                        📞 Contacter
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- 📝 DESCRIPTION -->
+        <div class="mt-5">
+            <h4 class="fw-bold">Description</h4>
+            <p class="text-muted"
+               th:text="${vehicle.description}"></p>
+        </div>
+
+        <!-- ⚙️ OPTIONS -->
+        <div class="mt-4" th:if="${!vehicle.options.isEmpty()}">
+            <h4 class="fw-bold">Options</h4>
+
+            <ul>
+                <li th:each="opt : ${vehicle.options}">
+                    <span th:text="${opt.name}"></span>
+                    -
+                    <span th:text="${opt.price + ' € / mois '}"></span>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+</section>
+
+<div th:if="${vehicle.rental != null}" class="mt-5">
+
+    <div class="card shadow-lg border-0 p-4" style="border-radius:15px;">
+
+        <h5 class="fw-bold mb-4 text-center">
+            🚗 Simulation LOA
+        </h5>
+
+        <!-- DURÉE -->
+        <div class="mb-3">
+            <label class="form-label fw-semibold">Durée</label>
+            <select id="duration" class="form-select">
+                <option th:each="d : ${vehicle.rental.allowedDurations}"
+                        th:value="${d.months}"
+                        th:text="${d.months + ' mois'}">
+                </option>
+            </select>
+        </div>
+
+        <!-- KM -->
+        <div class="mb-3">
+            <label class="form-label fw-semibold">Kilométrage annuel</label>
+            <select id="km" class="form-select">
+                <option th:each="k : ${vehicle.rental.allowedKmPerYear}"
+                        th:value="${k.km}"
+                        th:text="${k.km + ' km'}">
+                </option>
+            </select>
+        </div>
+
+        <!-- OPTIONS -->
+        <div class="mb-4">
+            <label class="form-label fw-semibold">Options</label>
+
+            <div class="row">
+                <div class="col-6 mb-2" th:each="opt : ${vehicle.options}">
+                    <div class="form-check border rounded p-2 option-box d-flex align-items-center">
+                        <input type="checkbox"
+                               class="form-check-input me-2 option-checkbox"
+                               th:value="${opt.price}"
+                               th:id="'opt-' + ${opt.id}">
+
+                        <label class="form-check-label w-100 mb-0"
+                               th:for="'opt-' + ${opt.id}">
+                            <span th:text="${opt.name}"></span><br>
+                            <small class="text-muted">
+                                +<span th:text="${opt.price}"></span> € / mois
+                            </small>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RÉSULTAT -->
+        <div class="bg-dark text-white text-center p-4 rounded result-box">
+            <small class="text-uppercase">Mensualité</small>
+            <h2 class="fw-bold mb-0">
+                <span id="resultPrice"
+                      th:text="${vehicle.rental.baseMonthlyPayment}"></span> €
+            </h2>
+        </div>
+
+    </div>
+
+</div>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+<script th:inline="javascript"> const basePrice = [[${vehicle.rental.baseMonthlyPayment}]]; </script>
+<script th:inline="javascript" th:src="@{/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/js/details.js}"></script>
+
+</body>
+</html>

@@ -148,4 +148,12 @@ public class VehicleService {
 
         vehicleRepository.delete(vehicle);
     }
+
+    public List<Vehicle> getVehiclesForSale() {
+        return vehicleRepository.findVehiclesForSale();
+    }
+
+    public List<Vehicle> getVehiclesForRental() {
+        return vehicleRepository.findVehiclesForRental();
+    }
 }
