@@ -6,9 +6,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequiredArgsConstructor
+@RequestMapping("/public")
 public class CatalogController {
 
     private final VehicleService vehicleService;
@@ -25,7 +27,7 @@ public class CatalogController {
         return "catalog/rentals";
     }
 
-    @GetMapping("/vehicles/{id}")
+    @GetMapping("/Details/{id}")
     public String vehicleDetails(@PathVariable Long id, Model model) {
 
         model.addAttribute("vehicle", vehicleService.getVehicleById(id));

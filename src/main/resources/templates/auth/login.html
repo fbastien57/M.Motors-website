@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/header :: header('Login - M.Motors')}"></head>
+
+<body class="bg-light">
+
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+
+    <div class="card shadow-sm border-0 p-4" style="width: 100%; max-width: 420px;">
+
+        <h3 class="text-center mb-4 fw-bold">Connexion</h3>
+
+        <!-- ERROR MESSAGE -->
+        <div th:if="${param.error}" class="alert alert-danger text-center">
+            Email ou mot de passe incorrect
+        </div>
+
+        <!-- LOGOUT MESSAGE -->
+        <div th:if="${param.logout}" class="alert alert-success text-center">
+            Vous êtes déconnecté
+        </div>
+
+        <!-- FORM -->
+        <form th:action="@{/login}" method="post">
+
+            <!-- EMAIL -->
+            <div class="mb-3">
+                <label class="form-label">Email</label>
+                <input type="text"
+                       name="username"
+                       class="form-control"
+                       placeholder="ex: test@gmail.com"
+                       required>
+            </div>
+
+            <!-- PASSWORD -->
+            <div class="mb-3">
+                <label class="form-label">Mot de passe</label>
+                <input type="password"
+                       name="password"
+                       class="form-control"
+                       placeholder="••••••••"
+                       required>
+            </div>
+
+            <!-- SUBMIT -->
+            <button type="submit" class="btn btn-dark w-100">
+                Se connecter
+            </button>
+
+        </form>
+
+        <hr>
+
+        <p class="text-center small">
+            Pas de compte ?
+            <a th:href="@{/register}" class="text-decoration-none">Créer un compte</a>
+        </p>
+
+    </div>
+
+</div>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+</body>
+</html>
