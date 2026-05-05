@@ -27,7 +27,7 @@ public class CatalogController {
         return "catalog/rentals";
     }
 
-    @GetMapping("/Details/{id}")
+    @GetMapping("/details/{id}")
     public String vehicleDetails(@PathVariable Long id, Model model) {
 
         model.addAttribute("vehicle", vehicleService.getVehicleById(id));
