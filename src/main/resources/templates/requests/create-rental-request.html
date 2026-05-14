@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/header :: header('Demande de location')}"></head>
+
+<body>
+
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<section class="bg-light py-4 border-bottom">
+    <div class="container">
+        <h2 class="fw-bold">Demande de location</h2>
+
+        <p class="text-muted"
+           th:text="${vehicle.brand + ' ' + vehicle.model}">
+        </p>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+
+        <form th:action="@{/client/requests/create}" method="post">
+
+            <input type="hidden" name="vehicleId" th:value="${vehicle.id}"/>
+            <input type="hidden" name="type" value="RENTAL"/>
+
+            <!-- OPTIONS -->
+            <div class="mb-4">
+                <h5>Options</h5>
+
+                <div class="row">
+                    <div class="col-md-4 mb-2"
+                         th:each="opt : ${vehicle.options}">
+
+                        <label class="border rounded p-2 w-100">
+
+                            <input type="checkbox"
+                                   name="optionIds"
+                                   th:value="${opt.id}">
+
+                            <span th:text="${opt.name}"></span><br>
+
+                            <small class="text-muted">
+                                + <span th:text="${opt.price}"></span> €
+                            </small>
+
+                        </label>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- RENTAL -->
+            <div class="mb-3">
+                <label>Durée</label>
+                <select name="duration" class="form-select">
+                    <option th:each="d : ${vehicle.rental.allowedDurations}"
+                            th:value="${d}"
+                            th:text="${d}">
+                    </option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label>Kilométrage annuel</label>
+                <select name="kmPerYear" class="form-select">
+                    <option th:each="k : ${vehicle.rental.allowedKmPerYear}"
+                            th:value="${k}"
+                            th:text="${k}">
+                    </option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <div class="alert alert-info">
+                    💡 Apport fixé à <strong th:text="${vehicle.rental.deposit}"></strong> €
+                    par l’offre de location
+                </div>
+            </div>
+
+            <button class="btn btn-dark w-100">
+                Créer ma demande de location
+            </button>
+
+        </form>
+
+    </div>
+</section>
+
+</body>
+</html>

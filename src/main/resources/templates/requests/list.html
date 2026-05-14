@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/header :: header('Mes demandes')}">
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<!-- HEADER -->
+<section class="bg-light py-4 border-bottom">
+
+    <div class="container">
+
+        <h2 class="fw-bold">
+            Mes demandes
+        </h2>
+
+        <p class="text-muted">
+            Retrouvez toutes vos demandes d'achat et location
+        </p>
+
+    </div>
+
+</section>
+
+<!-- CONTENT -->
+<section class="py-5">
+
+    <div class="container">
+
+        <!-- EMPTY -->
+        <div th:if="${requests.isEmpty()}">
+
+            <div class="alert alert-info shadow-sm">
+                Vous n'avez aucune demande.
+            </div>
+
+        </div>
+
+        <!-- LIST -->
+        <div class="row g-4"
+             th:if="${!requests.isEmpty()}">
+
+            <div class="col-md-6 col-lg-4"
+                 th:each="request : ${requests}">
+
+                <div class="card shadow-sm border-0 h-100">
+
+                    <div class="card-body d-flex flex-column">
+
+                        <!-- TITLE -->
+                        <div class="d-flex justify-content-between align-items-start">
+
+                            <h5 class="fw-bold">
+                                Demande #<span th:text="${request.id}"></span>
+                            </h5>
+
+                            <!-- STATUS -->
+                            <span class="badge"
+                                  th:classappend="
+                                    ${request.status.name() == 'PENDING'} ? 'bg-warning text-dark' :
+                                    (${request.status.name() == 'VALIDATED'} ? 'bg-success' :
+                                    (${request.status.name() == 'REJECTED'} ? 'bg-danger' :
+                                    'bg-secondary'))"
+
+                                  th:text="${request.status}">
+                            </span>
+
+                        </div>
+
+                        <hr>
+
+                        <!-- VEHICLE -->
+                        <h6 class="fw-bold mb-1">
+                            Véhicule
+                        </h6>
+
+                        <p class="mb-2">
+
+                            <span th:text="${request.vehicle.brand}"></span>
+                            <span th:text="${request.vehicle.model}"></span>
+
+                        </p>
+
+                        <!-- TYPE -->
+                        <h6 class="fw-bold mb-1">
+                            Type
+                        </h6>
+
+                        <p>
+
+                            <span class="badge bg-dark"
+                                  th:text="${request.type}">
+                            </span>
+
+                        </p>
+
+                        <!-- DATE -->
+                        <small class="text-muted mt-auto">
+
+                            Créée le :
+                            <span th:text="${#temporals.format(request.createdAt, 'dd/MM/yyyy')}">
+                            </span>
+
+                        </small>
+
+                        <!-- BUTTON -->
+                        <a class="btn btn-primary w-100 mt-3"
+                           th:href="@{'/client/requests/' + ${request.id}}">
+
+                            Voir la demande
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- FOOTER -->
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+</body>
+</html>

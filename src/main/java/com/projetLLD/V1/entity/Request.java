@@ -54,6 +54,12 @@ public class Request {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    @OneToOne(mappedBy = "request", cascade = CascadeType.ALL, orphanRemoval = true)
+    private RequestRentalDetails rentalDetails;
+
+    @OneToOne(mappedBy = "request", cascade = CascadeType.ALL, orphanRemoval = true)
+    private RequestSaleDetails saleDetails;
+
     @PrePersist
     public void prePersist() {
         this.createdAt = LocalDateTime.now();

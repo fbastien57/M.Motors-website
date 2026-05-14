@@ -19,7 +19,7 @@
                 <li class="nav-item">
                     <a class="nav-link" th:href="@{/}" th:text="'Accueil'">Accueil</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" sec:authorize="isAuthenticated() and hasAnyRole('ADMIN','GESTIONNAIRE')">
                     <a class="nav-link" th:href="@{/vehicles}" th:text="'Véhicules'">Véhicules</a>
                 </li>
                 <li class="nav-item">

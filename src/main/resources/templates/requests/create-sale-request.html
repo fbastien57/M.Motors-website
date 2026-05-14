@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/header :: header('Demande d\'achat')}"></head>
+
+<body>
+
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<!-- HEADER -->
+<section class="bg-light py-4 border-bottom">
+    <div class="container">
+        <h2 class="fw-bold">Demande d'achat</h2>
+
+        <p class="text-muted"
+           th:text="${vehicle.brand + ' ' + vehicle.model}">
+        </p>
+    </div>
+</section>
+
+<!-- CONTENT -->
+<section class="py-5">
+    <div class="container">
+
+        <div class="row g-4">
+
+            <!-- 🧾 INFOS VEHICULE -->
+            <div class="col-md-5">
+
+                <div class="card shadow-sm p-3">
+
+                    <h5 class="fw-bold mb-3">Résumé du véhicule</h5>
+
+                    <!-- IMAGE -->
+                    <img class="img-fluid rounded mb-3"
+                         th:src="${vehicle.photos.isEmpty()} ? '/image/default-car.jpg' : '/' + ${vehicle.photos[0].filePath}">
+
+                    <ul class="list-unstyled">
+
+                        <li class="mb-2">
+                            <strong>Prix :</strong>
+                            <span class="text-success fw-bold"
+                                  th:text="${vehicle.sale.salePrice + ' €'}"></span>
+                        </li>
+
+                        <li class="mb-2">
+                            <strong>Kilométrage :</strong>
+                            <span th:text="${vehicle.mileage + ' km'}"></span>
+                        </li>
+
+                        <li class="mb-2">
+                            <strong>Boîte :</strong>
+                            <span th:text="${vehicle.gearbox}"></span>
+                        </li>
+
+                        <li class="mb-2">
+                            <strong>Carburant :</strong>
+                            <span th:text="${vehicle.fuelType}"></span>
+                        </li>
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+            <!-- 📄 FORMULAIRE -->
+            <div class="col-md-7">
+
+                <form th:action="@{/client/requests/create}" method="post">
+
+                    <input type="hidden" name="vehicleId" th:value="${vehicle.id}"/>
+                    <input type="hidden" name="type" value="SALE"/>
+
+                    <div class="card shadow-sm p-4">
+
+                        <h5 class="fw-bold mb-3">Finaliser la demande</h5>
+
+                        <div class="mb-3">
+                            <label>Financement</label>
+                            <select name="financing" class="form-select">
+                                <option value="true">Oui</option>
+                                <option value="false">Non</option>
+                            </select>
+                        </div>
+
+                        <button class="btn btn-success w-100">
+                            🛒 Créer ma demande d'achat
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+</body>
+</html>

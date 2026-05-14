@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/header :: header('Gestion documents')}"></head>
+
+<body>
+
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<section class="py-4 bg-light border-bottom">
+    <div class="container">
+        <h2 class="fw-bold">Gestion des documents</h2>
+        <p class="text-muted">Upload et gestion des documents téléchargeables</p>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+
+        <!-- UPLOAD -->
+        <div class="card p-3 mb-4">
+
+            <form th:action="@{/manager/documents/upload}"
+                  method="post"
+                  enctype="multipart/form-data">
+
+                <div class="row g-2">
+
+                    <div class="col-md-3">
+                        <input name="name" class="form-control" placeholder="Nom du document">
+                    </div>
+
+                    <div class="col-md-3">
+                        <input name="description" class="form-control" placeholder="Description">
+                    </div>
+
+                    <div class="col-md-3">
+                        <select name="category" class="form-select">
+                            <option th:each="c : ${T(com.projetLLD.V1.enums.DocumentCategory).values()}"
+                                    th:value="${c}"
+                                    th:text="${c}">
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-3">
+                        <input type="file" name="file" class="form-control">
+                    </div>
+
+                </div>
+
+                <button class="btn btn-success mt-3">
+                    Upload
+                </button>
+
+            </form>
+
+        </div>
+
+        <!-- TABLE -->
+        <table class="table table-hover align-middle">
+
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Nom</th>
+                <th>Catégorie</th>
+                <th>Visible</th>
+                <th>Date</th>
+                <th></th>
+            </tr>
+            </thead>
+
+            <tbody>
+
+            <tr th:each="doc : ${documents}">
+
+                <td th:text="${doc.id}"></td>
+
+                <td th:text="${doc.name}"></td>
+
+                <td>
+                <span class="badge bg-dark"
+                      th:text="${doc.category}">
+                </span>
+                </td>
+
+                <td>
+                    <span th:text="${doc.visible ? 'Oui' : 'Non'}"></span>
+                </td>
+
+                <td th:text="${#temporals.format(doc.createdAt, 'dd/MM/yyyy')}"></td>
+
+                <td class="d-flex gap-2">
+
+                    <form th:action="@{'/manager/documents/' + ${doc.id} + '/toggle'}"
+                          method="post">
+
+                        <button class="btn btn-sm btn-warning">
+                            Visibilité
+                        </button>
+
+                    </form>
+
+                    <a th:href="@{'/' + ${doc.filePath}}"
+                       target="_blank"
+                       class="btn btn-sm btn-primary">
+                        Afficher
+                    </a>
+
+                </td>
+
+                <td class="d-flex gap-2">
+
+                    <form th:action="@{'/manager/documents/' + ${doc.id} + '/delete'}"
+                          method="post"
+                          onsubmit="return confirm('Supprimer ce document ?')">
+
+                        <button class="btn btn-sm btn-danger">
+                            Supprimer
+                        </button>
+
+                    </form>
+
+                </td>
+
+            </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+    </div>
+
+</section>
+
+</body>
+</html>

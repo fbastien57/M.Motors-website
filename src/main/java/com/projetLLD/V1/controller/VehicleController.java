@@ -10,6 +10,7 @@ import com.projetLLD.V1.service.VehicleSaleService;
 import com.projetLLD.V1.service.VehicleService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,6 +21,7 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
+@PreAuthorize("hasAnyRole('GESTIONNAIRE','ADMIN')")
 @RequestMapping("/vehicles")
 public class VehicleController {
 

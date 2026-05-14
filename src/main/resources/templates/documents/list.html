@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/header :: header('Documents')}"></head>
+
+<body>
+
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<section class="py-4 bg-light border-bottom">
+    <div class="container">
+        <h2 class="fw-bold">Documents disponibles</h2>
+        <p class="text-muted">Téléchargez les documents officiels</p>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+
+        <div class="row g-3">
+
+            <div class="col-md-4" th:each="doc : ${documents}">
+
+                <div class="card shadow-sm h-100">
+
+                    <div class="card-body">
+
+                        <h5 th:text="${doc.name}"></h5>
+
+                        <p class="text-muted"
+                           th:text="${doc.description}">
+                        </p>
+
+                        <span class="badge bg-dark"
+                              th:text="${doc.category}">
+                        </span>
+
+                        <hr>
+
+                        <a class="btn btn-primary w-100"
+                           th:href="@{'/' + ${doc.filePath}}"
+                           target="_blank">
+
+                            Télécharger
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+</body>
+</html>

@@ -4,6 +4,7 @@ import com.projetLLD.V1.dto.VehicleSaleUpdateDTO;
 import com.projetLLD.V1.service.VehicleSaleService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,6 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @RequiredArgsConstructor
 @Controller
+@PreAuthorize("hasAnyRole('GESTIONNAIRE','ADMIN')")
 public class VehicleSaleController {
 
     private final VehicleSaleService vehicleSaleService;

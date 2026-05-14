@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/header :: header('Gestion des demandes')}"></head>
+
+<body>
+
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<section class="py-4 bg-light border-bottom">
+    <div class="container">
+        <h2 class="fw-bold">Gestion des demandes</h2>
+        <p class="text-muted">Administration des demandes clients</p>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+
+        <div class="table-responsive">
+
+            <table class="table table-hover align-middle">
+
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Client</th>
+                    <th>Véhicule</th>
+                    <th>Statut</th>
+                    <th>Date</th>
+                    <th></th>
+                </tr>
+                </thead>
+
+                <tbody>
+
+                <tr th:each="req : ${requests}">
+
+                    <td th:text="${req.id}"></td>
+
+                    <td th:text="${req.user.firstName + ' ' + req.user.lastName}"></td>
+
+                    <td th:text="${req.vehicle.brand + ' ' + req.vehicle.model}"></td>
+
+                    <td>
+                        <span class="badge"
+                              th:classappend="
+                                ${req.status.name() == 'PENDING'} ? 'bg-warning text-dark' :
+                                (${req.status.name() == 'REJECTED'} ? 'bg-danger' :
+                                (${req.status.name() == 'APPROVED'} ? 'bg-success' :
+                                'bg-secondary'))"
+                              th:text="${req.status}">
+                        </span>
+                    </td>
+
+                    <td th:text="${#temporals.format(req.createdAt, 'dd/MM/yyyy HH:mm')}"></td>
+
+                    <td>
+                        <a class="btn btn-sm btn-primary"
+                           th:href="@{'/manager/requests/' + ${req.id}}">
+                            Voir
+                        </a>
+                    </td>
+
+                </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+</section>
+
+</body>
+</html>

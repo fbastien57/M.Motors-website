@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequiredArgsConstructor
@@ -27,11 +28,17 @@ public class CatalogController {
         return "catalog/rentals";
     }
 
-    @GetMapping("/details/{id}")
-    public String vehicleDetails(@PathVariable Long id, Model model) {
+    @GetMapping("/details/sale/{id}")
+    public String saleDetails(@PathVariable Long id, Model model) {
 
         model.addAttribute("vehicle", vehicleService.getVehicleById(id));
+        return "catalog/details-sale";
+    }
 
-        return "catalog/details";
+    @GetMapping("/details/rental/{id}")
+    public String rentalDetails(@PathVariable Long id, Model model) {
+
+        model.addAttribute("vehicle", vehicleService.getVehicleById(id));
+        return "catalog/details-rental";
     }
 }

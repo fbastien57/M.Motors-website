@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const checkboxes = document.querySelectorAll(".option-checkbox");
     const result = document.getElementById("resultPrice");
 
+
     function calculatePrice() {
 
         let price = basePrice;

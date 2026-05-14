@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/header :: header('Ma demande')}">
+</head>
+
+<body>
+
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<!-- HEADER REQUEST -->
+<section class="bg-light py-4 border-bottom">
+    <div class="container">
+
+        <h2 class="fw-bold">
+            Demande #<span th:text="${request.id}"></span>
+        </h2>
+
+        <p>
+            Statut :
+            <span class="badge bg-info"
+                  th:text="${request.status}">
+            </span>
+        </p>
+
+    </div>
+</section>
+
+<!-- CONTENT -->
+<section class="py-5">
+    <div class="container">
+
+        <div class="row g-4">
+
+            <!-- VEHICULE -->
+            <div class="col-md-6">
+
+                <div class="card p-3 shadow-sm">
+
+                    <h5 class="fw-bold">Véhicule</h5>
+
+                    <p th:text="${request.vehicle.brand + ' ' + request.vehicle.model}"></p>
+
+                    <p class="text-muted">
+                        <span th:text="${request.vehicle.year}"></span>
+                        •
+                        <span th:text="${request.vehicle.mileage}"></span> km
+                    </p>
+
+                </div>
+
+            </div>
+
+            <!-- TYPE -->
+            <div class="col-md-6">
+
+                <div class="card p-3 shadow-sm">
+
+                    <h5 class="fw-bold">Type de demande</h5>
+
+                    <span class="badge bg-dark"
+                          th:text="${request.type}">
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- OPTIONS -->
+        <div class="mt-4">
+
+            <h4>Options sélectionnées</h4>
+
+            <div th:if="${request.options.isEmpty()}">
+                <p class="text-muted">Aucune option</p>
+            </div>
+
+            <ul class="list-group" th:if="${!request.options.isEmpty()}">
+                <li class="list-group-item"
+                    th:each="opt : ${request.options}">
+
+                    <span th:text="${opt.name}"></span>
+                    -
+                    <span th:text="${opt.price + ' €'}"></span>
+
+                </li>
+            </ul>
+
+        </div>
+
+        <!-- RENTAL DETAILS -->
+        <div class="mt-4" th:if="${request.type.name() == 'RENTAL'}">
+
+            <h4>Détails location</h4>
+
+            <p>Durée :
+                <span th:text="${request.rentalDetails.duration}"></span>
+            </p>
+
+            <p>KM :
+                <span th:text="${request.rentalDetails.kmPerYear}"></span>
+            </p>
+
+            <p>Apport :
+                <span th:text="${request.rentalDetails.deposit}"></span> €
+            </p>
+
+        </div>
+
+        <!-- SALE DETAILS -->
+        <div class="mt-4" th:if="${request.type.name() == 'SALE'}">
+
+            <h4>Détails achat</h4>
+
+            <p>Prix :
+                <span th:text="${request.saleDetails.salePrice}"></span> €
+            </p>
+
+            <p>Financement :
+                <span th:text="${request.saleDetails.financing ? 'Oui' : 'Non'}"></span>
+            </p>
+
+        </div>
+
+        <!-- DOCUMENTS -->
+        <div class="mt-5">
+
+            <h4>Documents</h4>
+
+            <div class="row">
+
+                <div class="col-md-6 mb-3"
+                     th:each="doc : ${request.documents}">
+
+                    <div class="card p-3">
+
+                        <h6 th:text="${doc.type}"></h6>
+
+                        <!-- STATUS -->
+                        <span class="badge"
+                              th:classappend="${doc.status.name() == 'VALIDATED'} ? 'bg-success' :
+                                              (${doc.status.name() == 'REJECTED'} ? 'bg-danger' : 'bg-warning')"
+                              th:text="${doc.status}">
+                        </span>
+
+                        <!-- REASON -->
+                        <p class="text-danger mt-2"
+                           th:if="${doc.rejectionReason != null}"
+                           th:text="${doc.rejectionReason}">
+                        </p>
+
+                        <!-- FILE -->
+                        <a th:if="${doc.filePath != null}"
+                           th:href="@{'/' + ${doc.filePath}}"
+                           target="_blank"
+                           class="btn btn-sm btn-dark mt-2">
+                            Voir fichier
+                        </a>
+
+                        <!-- UPLOAD / REUPLOAD -->
+                        <form th:action="@{'/client/documents/' + ${request.id} + '/upload'}"
+                              method="post"
+                              enctype="multipart/form-data"
+                              class="mt-2">
+
+                            <input type="hidden" name="type"
+                                   th:value="${doc.type}"/>
+
+                            <input type="file"
+                                   name="file"
+                                   required
+                                   accept=".pdf,.jpg,.jpeg,.png"
+                                   class="form-control form-control-sm mb-2">
+
+                            <button class="btn btn-warning btn-sm w-100">
+                                Upload / Re-upload
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+</body>
+</html>

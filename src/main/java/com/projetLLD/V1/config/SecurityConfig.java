@@ -41,13 +41,16 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
 
                         // public
-                        .requestMatchers("/", "/register", "/login", "/css/**", "/js/**" , "/image/**", "/fragments/**", "/public/**" , "/uploads/**").permitAll()
+                        .requestMatchers("/", "/register", "/login", "/css/**", "/js/**" , "/image/**", "/fragments/**", "/public/**" , "/uploads/**", "/documents/**").permitAll()
+
+                        // client , gestionnaire et admin
+                        .requestMatchers("/client/**").hasAnyRole("CLIENT","ADMIN", "GESTIONNAIRE")
 
                         // admin only
                         .requestMatchers("/admin/**").hasRole("ADMIN")
 
                         // gestionnaire + admin
-                        .requestMatchers("/options/**", "/rentals/**" , "/sales/**" , "/vehicles/**").hasAnyRole("ADMIN", "GESTIONNAIRE")
+                        .requestMatchers("/options/**", "/rentals/**" , "/sales/**" , "/vehicles/**", "/manager/**").hasAnyRole("ADMIN", "GESTIONNAIRE")
 
                         // authenticated users
                         .anyRequest().authenticated()
