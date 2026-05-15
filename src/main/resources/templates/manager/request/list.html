@@ -61,6 +61,18 @@
                             Voir
                         </a>
                     </td>
+                    <td>
+                        <form th:action="@{'/manager/requests/' + ${req.id} + '/delete'}"
+                              method="post"
+                              style="display:inline">
+
+                            <button class="btn btn-sm btn-danger"
+                                    onclick="return confirm('Supprimer cette demande ?')">
+                                Supprimer
+                            </button>
+
+                        </form>
+                    </td>
 
                 </tr>
 

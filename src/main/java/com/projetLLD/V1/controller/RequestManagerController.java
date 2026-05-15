@@ -40,17 +40,17 @@ public class RequestManagerController {
         return "manager/request/details";
     }
 
-    @PostMapping("/documents/{docId}/validate")
-    public String validateDoc(@PathVariable Long docId) {
+    @PostMapping("/{id}/documents/{docId}/validate")
+    public String validateDoc(@PathVariable Long docId,@PathVariable Long id) {
         documentService.validateDocument(docId);
-        return "redirect:/requests/requests";
+        return "redirect:/manager/requests/" + id;
     }
 
-    @PostMapping("/documents/{docId}/reject")
-    public String rejectDoc(@PathVariable Long docId,
+    @PostMapping("{id}/documents/{docId}/reject")
+    public String rejectDoc(@PathVariable Long docId,@PathVariable Long id,
                             @RequestParam String reason) {
         documentService.rejectDocument(docId, reason);
-        return "redirect:/requests/requests";
+        return "redirect:/manager/requests/" + id;
     }
 
     @PostMapping("/{id}/approve")
@@ -83,5 +83,16 @@ public class RequestManagerController {
         requestService.rejectRequest(id);
 
         return "redirect:/manager/requests/" + id;
+    }
+
+    @PostMapping("/{id}/delete")
+    public String deleteRequest(@PathVariable Long id,
+                                RedirectAttributes redirectAttributes) {
+
+        requestService.deleteRequest(id);
+
+        redirectAttributes.addFlashAttribute("success", "Demande supprimée");
+
+        return "redirect:/manager/requests";
     }
 }

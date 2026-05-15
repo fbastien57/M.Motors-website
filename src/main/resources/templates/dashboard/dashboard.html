@@ -107,7 +107,7 @@
 
     <!-- GESTIONNAIRE -->
     <div class="mt-5"
-         sec:authorize="hasRole('GESTIONNAIRE')">
+         sec:authorize="hasAnyRole('GESTIONNAIRE', 'ADMIN')">
 
         <h3 class="fw-bold mb-4">
             Gestionnaire
@@ -168,6 +168,53 @@
                         <a class="btn btn-warning text-dark dashboard-btn"
                            th:href="@{/manager/documents}">
                             Accéder
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ADMIN -->
+    <div class="mt-5"
+         sec:authorize="hasRole('ADMIN')">
+
+        <h3 class="fw-bold mb-4">
+            Administration
+        </h3>
+
+        <div class="row g-4">
+
+            <!-- GESTION DES GESTIONNAIRES -->
+            <div class="col-12 col-lg-6">
+
+                <div class="card dashboard-card h-100">
+
+                    <div class="card-body p-4 d-flex flex-column">
+
+                        <div class="mb-3 text-dark dashboard-icon">
+                            <i class="bi bi-people-fill"></i>
+                        </div>
+
+                        <h4 class="fw-bold">
+                            Gestion des gestionnaires
+                        </h4>
+
+                        <p class="text-muted flex-grow-1">
+                            Créez, consultez et supprimez
+                            les comptes gestionnaires.
+                        </p>
+
+                        <a class="btn btn-dark dashboard-btn"
+                           th:href="@{/admin/managers}">
+
+                            Accéder
+
                         </a>
 
                     </div>

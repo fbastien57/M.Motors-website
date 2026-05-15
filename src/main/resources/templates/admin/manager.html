@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/header :: header('Gestionnaires')}"></head>
+
+<body class="bg-light">
+
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<div class="container py-5">
+
+    <!-- HEADER -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+            <h2 class="fw-bold mb-0">
+                Gestion des gestionnaires
+            </h2>
+
+            <p class="text-muted">
+                Liste des employés ayant accès au back-office
+            </p>
+        </div>
+
+        <a th:href="@{/admin/create-manager}"
+           class="btn btn-dark">
+
+            + Ajouter un gestionnaire
+        </a>
+
+    </div>
+
+    <!-- TABLE -->
+    <div class="card shadow-sm border-0">
+
+        <div class="card-body p-0">
+
+            <table class="table table-hover align-middle mb-0">
+
+                <thead class="table-dark">
+
+                <tr>
+                    <th>ID</th>
+                    <th>Prénom</th>
+                    <th>Nom</th>
+                    <th>Email</th>
+                    <th>Date création</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+
+                </thead>
+
+                <tbody>
+
+                <tr th:each="manager : ${managers}">
+
+                    <td th:text="${manager.id}"></td>
+
+                    <td th:text="${manager.firstName}"></td>
+
+                    <td th:text="${manager.lastName}"></td>
+
+                    <td th:text="${manager.email}"></td>
+
+                    <td th:text="${#temporals.format(manager.createdAt, 'dd/MM/yyyy HH:mm')}"></td>
+
+                    <!-- ACTION -->
+                    <td class="text-center">
+
+                        <form th:action="@{/admin/delete-manager/{id}(id=${manager.id})}"
+                              method="post"
+                              onsubmit="return confirm('Supprimer ce gestionnaire ?')">
+
+                            <button type="submit"
+                                    class="btn btn-sm btn-danger">
+
+                                Supprimer
+                            </button>
+
+                        </form>
+
+                    </td>
+
+                </tr>
+
+                <!-- EMPTY -->
+                <tr th:if="${#lists.isEmpty(managers)}">
+
+                    <td colspan="6" class="text-center py-4 text-muted">
+
+                        Aucun gestionnaire trouvé.
+
+                    </td>
+
+                </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+</body>
+</html>

@@ -73,7 +73,7 @@
                         </a>
 
                         <!-- VALIDATE -->
-                        <form th:action="@{'/manager/requests/documents/' + ${doc.id} + '/validate'}"
+                        <form th:action="@{'/manager/requests/' + ${id} + '/documents/' + ${doc.id} + '/validate'}"
                               method="post">
                             <button class="btn btn-sm btn-success">
                                 Valider
@@ -81,7 +81,7 @@
                         </form>
 
                         <!-- REJECT -->
-                        <form th:action="@{'/manager/requests/documents/' + ${doc.id} + '/reject'}"
+                        <form th:action="@{'/manager/requests/' + ${id} + '/documents/' + ${doc.id} + '/reject'}"
                               method="post">
 
                             <input type="text"

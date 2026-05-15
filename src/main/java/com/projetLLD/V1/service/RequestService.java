@@ -23,6 +23,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class RequestService {
 
+    private final FileStorageService fileStorageService;
     private final RequestRepository requestRepository;
     private final VehicleRepository vehicleRepository;
     private final VehicleOptionRepository vehicleOptionRepository;
@@ -179,5 +180,21 @@ public class RequestService {
                 .orElseThrow();
 
         request.setStatus(RequestStatus.REJECTED);
+    }
+
+    @Transactional
+    public void deleteRequest(Long id) {
+
+        Request request = requestRepository.findById(id)
+                .orElseThrow();
+
+        // SUPPRIMER LES FICHIERS PHYSIQUES
+        request.getDocuments().forEach(doc -> {
+            if (doc.getFilePath() != null) {
+                fileStorageService.delete(doc.getFilePath());
+            }
+        });
+
+        requestRepository.delete(request);
     }
 }
