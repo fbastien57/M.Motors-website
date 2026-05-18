@@ -12,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.nio.file.Paths;
+
 @Service
 @RequiredArgsConstructor
 public class RequestDocumentService {
@@ -54,6 +56,12 @@ public class RequestDocumentService {
 
         String filename = originalFilename.toLowerCase();
 
+        // nettoyage du nom (sécurité)
+        String cleanOriginalName = Paths.get(originalFilename)
+                .getFileName()
+                .toString()
+                .toLowerCase();
+
         // EXTENSIONS AUTORISEES
         boolean validExtension =
                 filename.endsWith(".pdf")
@@ -90,11 +98,22 @@ public class RequestDocumentService {
                 .findFirst()
                 .orElseThrow();
 
+        // ============================
+        // NOM DE FICHIER SÉCURISÉ
+        // ============================
+
+        String extension = "";
+
+        int dotIndex = cleanOriginalName.lastIndexOf('.');
+        if (dotIndex != -1) {
+            extension = cleanOriginalName.substring(dotIndex);
+        }
+
         // SAVE
         String path = fileStorageService.save(file, "documents");
 
         doc.setFilePath(path);
-        doc.setFileName(originalFilename);
+        doc.setFileName(cleanOriginalName);
         doc.setStatus(DocumentStatus.UPLOADED);
         doc.setRejectionReason(null);
 

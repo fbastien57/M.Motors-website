@@ -19,6 +19,7 @@ public class CreateRequestDTO {
     private Long vehicleId;
 
     private RequestType type;
+
     private List<Long> optionIds = new ArrayList<>();
 
     // RENTAL

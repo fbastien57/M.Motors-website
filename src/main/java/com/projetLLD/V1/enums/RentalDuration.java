@@ -18,4 +18,8 @@ public enum RentalDuration {
         return months;
     }
 
+    public String getLabel() {
+        return months + " mois";
+    }
+
 }

@@ -13,8 +13,12 @@ import lombok.Setter;
 public class RequestDocumentDTO {
 
     private Long id;
+
     private DocumentType type;
+
     private DocumentStatus status;
+
     private String fileName;
+
     private String rejectionReason;
 }

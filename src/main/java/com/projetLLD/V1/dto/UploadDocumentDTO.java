@@ -13,5 +13,6 @@ import org.springframework.web.multipart.MultipartFile;
 public class UploadDocumentDTO {
 
     private DocumentType type;
+
     private MultipartFile file;
 }

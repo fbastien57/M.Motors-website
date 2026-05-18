@@ -1,26 +1,36 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="~{fragments/header :: header('Mes demandes')}">
+<head th:replace="~{fragments/header :: header('Mes demandes - M.Motors')}">
+    <link rel="stylesheet" th:href="@{/css/clientRequest.css}">
 </head>
 
-<body>
+<body class="bg-light">
 
 <!-- NAVBAR -->
 <div th:replace="~{fragments/navbar :: navbar}"></div>
 
 <!-- HEADER -->
-<section class="bg-light py-4 border-bottom">
+<section class="bg-white border-bottom py-5 shadow-sm">
 
     <div class="container">
 
-        <h2 class="fw-bold">
-            Mes demandes
-        </h2>
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
 
-        <p class="text-muted">
-            Retrouvez toutes vos demandes d'achat et location
-        </p>
+            <div>
+
+                <h1 class="fw-bold mb-2">
+                    <i class="bi bi-file-earmark-text text-primary me-2"></i>
+                    Mes demandes
+                </h1>
+
+                <p class="text-muted fs-5 mb-0">
+                    Consultez et suivez vos demandes de location et d'achat.
+                </p>
+
+            </div>
+
+        </div>
 
     </div>
 
@@ -34,86 +44,118 @@
         <!-- EMPTY -->
         <div th:if="${requests.isEmpty()}">
 
-            <div class="alert alert-info shadow-sm">
-                Vous n'avez aucune demande.
+            <div class="card border-0 shadow-sm text-center p-5 rounded-4">
+
+                <div class="display-1 text-primary mb-4">
+                    <i class="bi bi-inbox"></i>
+                </div>
+
+                <h3 class="fw-bold mb-3">
+                    Aucune demande
+                </h3>
+
+                <p class="text-muted fs-5">
+                    Vous n'avez encore effectué aucune demande.
+                </p>
+
             </div>
 
         </div>
 
-        <!-- LIST -->
+        <!-- REQUEST LIST -->
         <div class="row g-4"
              th:if="${!requests.isEmpty()}">
 
-            <div class="col-md-6 col-lg-4"
+            <div class="col-12 col-md-6 col-xl-4"
                  th:each="request : ${requests}">
 
-                <div class="card shadow-sm border-0 h-100">
+                <div class="card border-0 shadow-sm h-100 rounded-4 request-card">
 
-                    <div class="card-body d-flex flex-column">
+                    <div class="card-body p-4 d-flex flex-column">
 
-                        <!-- TITLE -->
-                        <div class="d-flex justify-content-between align-items-start">
+                        <!-- HEADER -->
+                        <div class="d-flex justify-content-between align-items-start mb-4">
 
-                            <h5 class="fw-bold">
-                                Demande #<span th:text="${request.id}"></span>
-                            </h5>
+                            <div>
+
+                                <small class="text-muted d-block">
+                                    Demande
+                                </small>
+
+                                <h4 class="fw-bold mb-0">
+                                    #<span th:text="${request.id}"></span>
+                                </h4>
+
+                            </div>
 
                             <!-- STATUS -->
-                            <span class="badge"
+                            <span class="badge rounded-pill px-3 py-2 fw-semibold"
                                   th:classappend="
                                     ${request.status.name() == 'PENDING'} ? 'bg-warning text-dark' :
                                     (${request.status.name() == 'VALIDATED'} ? 'bg-success' :
                                     (${request.status.name() == 'REJECTED'} ? 'bg-danger' :
                                     'bg-secondary'))"
 
-                                  th:text="${request.status}">
+                                  th:text="${request.status.label}">
                             </span>
 
                         </div>
 
-                        <hr>
-
                         <!-- VEHICLE -->
-                        <h6 class="fw-bold mb-1">
-                            Véhicule
-                        </h6>
+                        <div class="mb-4">
 
-                        <p class="mb-2">
+                            <small class="text-muted d-block mb-1">
+                                Véhicule
+                            </small>
 
-                            <span th:text="${request.vehicle.brand}"></span>
-                            <span th:text="${request.vehicle.model}"></span>
+                            <h5 class="fw-semibold">
 
-                        </p>
+                                <span th:text="${request.vehicle.brand}"></span>
+
+                                <span th:text="${request.vehicle.model}"></span>
+
+                            </h5>
+
+                        </div>
 
                         <!-- TYPE -->
-                        <h6 class="fw-bold mb-1">
-                            Type
-                        </h6>
+                        <div class="mb-4">
 
-                        <p>
+                            <small class="text-muted d-block mb-2">
+                                Type de demande
+                            </small>
 
-                            <span class="badge bg-dark"
-                                  th:text="${request.type}">
+                            <span class="badge bg-dark px-3 py-2 rounded-pill"
+                                  th:text="${request.type.label}">
                             </span>
 
-                        </p>
+                        </div>
 
                         <!-- DATE -->
-                        <small class="text-muted mt-auto">
+                        <div class="mt-auto">
 
-                            Créée le :
-                            <span th:text="${#temporals.format(request.createdAt, 'dd/MM/yyyy')}">
-                            </span>
+                            <small class="text-muted d-flex align-items-center mb-4">
 
-                        </small>
+                                <i class="bi bi-calendar-event me-2"></i>
 
-                        <!-- BUTTON -->
-                        <a class="btn btn-primary w-100 mt-3"
-                           th:href="@{'/client/requests/' + ${request.id}}">
+                                Créée le
+                                <span class="ms-1"
+                                      th:text="${#temporals.format(request.createdAt, 'dd/MM/yyyy')}">
+                                </span>
 
-                            Voir la demande
+                            </small>
 
-                        </a>
+                            <!-- CTA -->
+                            <a class="btn btn-primary w-100 py-2 rounded-3 fw-semibold"
+                               th:href="@{'/client/requests/' + ${request.id}}">
+
+                                <i class="bi bi-arrow-right-circle me-2"></i>
+
+                                Voir la demande
+
+                            </a>
+
+                        </div>
 
                     </div>
 

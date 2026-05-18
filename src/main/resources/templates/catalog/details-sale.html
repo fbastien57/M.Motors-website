@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 
-<head th:replace="~{fragments/header :: header('Détail véhicule - Vente')}"></head>
+<head th:replace="~{fragments/header :: header('Détail véhicule - Vente')}">
+    <link rel="stylesheet" th:href="@{/css/details.css}">
+</head>
 
 <body>
 
@@ -54,8 +56,8 @@
                     <hr>
 
                     <ul class="list-unstyled">
-                        <li><strong>Carburant :</strong> <span th:text="${vehicle.fuelType}"></span></li>
-                        <li><strong>Boîte :</strong> <span th:text="${vehicle.gearbox}"></span></li>
+                        <li><strong>Carburant :</strong> <span th:text="${vehicle.fuelType.label}"></span></li>
+                        <li><strong>Boîte :</strong> <span th:text="${vehicle.gearbox.label}"></span></li>
                         <li><strong>Kilométrage :</strong> <span th:text="${vehicle.mileage}"></span></li>
                     </ul>
 

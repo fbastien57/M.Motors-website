@@ -1,100 +1,166 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="~{fragments/header :: header('Détail demande')}"></head>
+<head th:replace="~{fragments/header :: header('Détail demande')}">
+    <link rel="stylesheet" th:href="@{/css/request.css}">
+</head>
 
 <body>
 
 <div th:replace="~{fragments/navbar :: navbar}"></div>
 
-<section class="py-4 bg-light border-bottom">
-    <div class="container">
-        <h2>Demande #<span th:text="${request.id}"></span></h2>
-        <p class="text-muted d-flex align-items-center gap-2">
+<div class="container py-5">
 
-            <span th:text="${request.user.firstName}"></span>
+    <!-- HEADER -->
+    <div class="mb-5">
+
+        <div class="d-flex flex-wrap align-items-center gap-3 mb-3">
+
+            <h1 class="fw-bold mb-0">
+                Demande #<span th:text="${request.id}"></span>
+            </h1>
+
+            <span class="badge px-3 py-2"
+                  th:classappend="
+                    ${request.status.name() == 'APPROVED'} ? 'bg-success' :
+                    (${request.status.name() == 'REJECTED'} ? 'bg-danger' :
+                    (${request.status.name() == 'PENDING'} ? 'bg-warning text-dark' :
+                    'bg-secondary'))"
+                  th:text="${request.status.label}">
+            </span>
+
+        </div>
+
+        <p class="text-muted fs-5">
+
+            <span th:text="${request.user.firstName + ' ' + request.user.lastName}"></span>
 
             •
 
             <span th:text="${request.vehicle.brand + ' ' + request.vehicle.model}"></span>
 
-            <span class="badge"
-                  th:classappend="
-            ${request.status.name() == 'APPROVED'} ? 'bg-success' :
-            (${request.status.name() == 'REJECTED'} ? 'bg-danger' :
-            (${request.status.name() == 'PENDING'} ? 'bg-warning text-dark' :
-            'bg-secondary'))"
-                  th:text="${request.status}">
-    </span>
-
         </p>
+
     </div>
-</section>
 
-<section class="py-5">
-    <div class="container">
+    <!-- ALERTS -->
+    <div th:if="${success}"
+         class="alert alert-success shadow-sm border-0 rounded-4 mb-4">
 
-        <!-- DOCUMENTS -->
-        <h4 class="mb-3">Documents</h4>
+        <span th:text="${success}"></span>
 
-        <div class="list-group">
+    </div>
 
-            <div class="list-group-item"
-                 th:each="doc : ${request.documents}">
+    <div th:if="${error}"
+         class="alert alert-danger shadow-sm border-0 rounded-4 mb-4">
 
-                <div class="d-flex justify-content-between align-items-center">
+        <span th:text="${error}"></span>
 
-                    <div>
-                        <strong th:text="${doc.type}"></strong>
+    </div>
 
-                        <span class="badge ms-2"
-                              th:classappend="
-                                ${doc.status.name() == 'UPLOADED'} ? 'bg-warning text-dark' :
-                                (${doc.status.name() == 'VALIDATED'} ? 'bg-success' :
-                                (${doc.status.name() == 'REJECTED'} ? 'bg-danger' :
-                                'bg-secondary'))"
-                              th:text="${doc.status}">
-                        </span>
+    <!-- DOCUMENTS -->
+    <div class="card dashboard-card mb-5">
 
-                        <div th:if="${doc.rejectionReason != null}"
-                             class="text-danger small mt-1"
-                             th:text="${doc.rejectionReason}">
+        <div class="card-body p-4">
+
+            <div class="d-flex align-items-center mb-4">
+
+                <div class="text-primary dashboard-icon me-3">
+                    <i class="bi bi-folder2-open"></i>
+                </div>
+
+                <div>
+
+                    <h4 class="fw-bold mb-0">
+                        Documents
+                    </h4>
+
+                    <p class="text-muted mb-0">
+                        Vérification des documents transmis.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="d-flex flex-column gap-3">
+
+                <div class="border rounded-4 p-4"
+                     th:each="doc : ${request.documents}">
+
+                    <div class="d-flex flex-column flex-lg-row justify-content-between gap-4">
+
+                        <!-- INFOS -->
+                        <div>
+
+                            <div class="d-flex align-items-center gap-3 mb-2">
+
+                                <h5 class="fw-bold mb-0"
+                                    th:text="${doc.type.label}">
+                                </h5>
+
+                                <span class="badge px-3 py-2"
+                                      th:classappend="
+                                        ${doc.status.name() == 'UPLOADED'} ? 'bg-warning text-dark' :
+                                        (${doc.status.name() == 'VALIDATED'} ? 'bg-success' :
+                                        (${doc.status.name() == 'REJECTED'} ? 'bg-danger' :
+                                        'bg-secondary'))"
+                                      th:text="${doc.status.label}">
+                                </span>
+
+                            </div>
+
+                            <div th:if="${doc.rejectionReason != null}"
+                                 class="text-danger small mt-2">
+
+                                <i class="bi bi-exclamation-circle"></i>
+
+                                <span th:text="${doc.rejectionReason}"></span>
+
+                            </div>
+
                         </div>
-                    </div>
 
-                    <div class="d-flex gap-2">
+                        <!-- ACTIONS -->
+                        <div class="d-flex flex-wrap gap-2 align-items-start">
 
-                        <!-- VIEW FILE -->
-                        <a th:if="${doc.filePath != null}"
-                           th:href="@{'/' + ${doc.filePath}}"
-                           target="_blank"
-                           class="btn btn-sm btn-outline-primary">
-                            Voir
-                        </a>
+                            <!-- VIEW -->
+                            <a th:if="${doc.filePath != null}"
+                               th:href="@{'/' + ${doc.filePath}}"
+                               target="_blank"
+                               class="btn btn-outline-primary btn-sm">
 
-                        <!-- VALIDATE -->
-                        <form th:action="@{'/manager/requests/' + ${id} + '/documents/' + ${doc.id} + '/validate'}"
-                              method="post">
-                            <button class="btn btn-sm btn-success">
-                                Valider
-                            </button>
-                        </form>
+                                Voir
 
-                        <!-- REJECT -->
-                        <form th:action="@{'/manager/requests/' + ${id} + '/documents/' + ${doc.id} + '/reject'}"
-                              method="post">
+                            </a>
 
-                            <input type="text"
-                                   name="reason"
-                                   placeholder="Motif"
-                                   class="form-control form-control-sm d-inline-block"
-                                   style="width:150px">
+                            <!-- VALIDATE -->
+                            <form th:action="@{'/manager/requests/' + ${id} + '/documents/' + ${doc.id} + '/validate'}"
+                                  method="post">
 
-                            <button class="btn btn-sm btn-danger">
-                                Refuser
-                            </button>
+                                <button class="btn btn-success btn-sm">
+                                    Valider
+                                </button>
 
-                        </form>
+                            </form>
+
+                            <!-- REJECT -->
+                            <form th:action="@{'/manager/requests/' + ${id} + '/documents/' + ${doc.id} + '/reject'}"
+                                  method="post"
+                                  class="d-flex gap-2">
+
+                                <input type="text"
+                                       name="reason"
+                                       placeholder="Motif"
+                                       class="form-control form-control-sm">
+
+                                <button class="btn btn-danger btn-sm">
+                                    Refuser
+                                </button>
+
+                            </form>
+
+                        </div>
 
                     </div>
 
@@ -105,45 +171,67 @@
         </div>
 
     </div>
-    <!-- SUCCESS -->
-    <div th:if="${success}"
-         class="alert alert-success">
 
-        <span th:text="${success}"></span>
+    <!-- ACTIONS -->
+    <div class="card dashboard-card">
+
+        <div class="card-body p-4">
+
+            <div class="d-flex align-items-center mb-4">
+
+                <div class="text-success dashboard-icon me-3">
+                    <i class="bi bi-check2-circle"></i>
+                </div>
+
+                <div>
+
+                    <h4 class="fw-bold mb-0">
+                        Validation finale
+                    </h4>
+
+                    <p class="text-muted mb-0">
+                        Finalisez le traitement de la demande.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="d-flex flex-wrap gap-3"
+                 th:with="allValidated=${request.documents.^[#this.status.name() != 'VALIDATED'] == null}">
+
+                <!-- APPROVE -->
+                <form th:action="@{'/manager/requests/' + ${request.id} + '/approve'}"
+                      method="post">
+
+                    <button class="btn btn-success dashboard-btn"
+                            th:disabled="${!allValidated}">
+
+                        Approuver la demande
+
+                    </button>
+
+                </form>
+
+                <!-- REJECT -->
+                <form th:action="@{'/manager/requests/' + ${request.id} + '/reject'}"
+                      method="post">
+
+                    <button class="btn btn-danger dashboard-btn">
+
+                        Refuser la demande
+
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
 
     </div>
 
-    <!-- ERROR -->
-    <div th:if="${error}"
-         class="alert alert-danger">
-
-        <span th:text="${error}"></span>
-
-    </div>
-    <!-- ACTIONS GESTIONNAIRE -->
-    <div class="mb-4 d-flex gap-2" th:with="allValidated=${request.documents.^[#this.status.name() != 'VALIDATED'] == null}">
-
-        <!-- APPROUVER -->
-        <form th:action="@{'/manager/requests/' + ${request.id} + '/approve'}"
-              method="post">
-
-            <button class="btn btn-success"
-                    th:disabled="${!allValidated}">
-                Approuver la demande
-            </button>
-        </form>
-
-        <!-- REFUSER -->
-        <form th:action="@{'/manager/requests/' + ${request.id} + '/reject'}"
-              method="post">
-
-            <button class="btn btn-danger">
-                Refuser la demande
-            </button>
-        </form>
-
-    </div>
-</section>
+</div>
 
 </body>
 </html>

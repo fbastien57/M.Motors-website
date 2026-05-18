@@ -1,0 +1,210 @@
+/* =========================================
+   REQUEST PAGES
+========================================= */
+
+body {
+    background-color: #f5f7fb;
+    color: #1e293b;
+}
+
+/* =========================================
+   TITLES
+========================================= */
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+    letter-spacing: -0.5px;
+}
+
+/* =========================================
+   CARDS
+========================================= */
+
+.dashboard-card {
+    border: none;
+    border-radius: 24px;
+    background: #ffffff;
+
+    box-shadow:
+            0 4px 20px rgba(15, 23, 42, 0.04),
+            0 2px 6px rgba(15, 23, 42, 0.02);
+
+    transition:
+            transform 0.25s ease,
+            box-shadow 0.25s ease;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-3px);
+
+    box-shadow:
+            0 14px 40px rgba(15, 23, 42, 0.08),
+            0 4px 12px rgba(15, 23, 42, 0.04);
+}
+
+/* =========================================
+   ICONS
+========================================= */
+
+.dashboard-icon {
+    font-size: 2.2rem;
+    line-height: 1;
+}
+
+/* =========================================
+   BUTTONS
+========================================= */
+
+.dashboard-btn {
+    border-radius: 14px;
+    padding: 12px 20px;
+    font-weight: 600;
+
+    transition:
+            transform 0.2s ease,
+            opacity 0.2s ease;
+}
+
+.dashboard-btn:hover {
+    transform: translateY(-1px);
+}
+
+/* SMALL BUTTONS */
+
+.btn-sm {
+    border-radius: 10px;
+    font-weight: 500;
+    padding-inline: 14px;
+}
+
+/* =========================================
+   TABLE
+========================================= */
+
+.table {
+    margin-bottom: 0;
+}
+
+.table thead th {
+    border-bottom: none;
+    color: #64748b;
+
+    font-weight: 700;
+    font-size: 0.85rem;
+
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+}
+
+.table tbody tr {
+    border-color: #eef2f7;
+}
+
+.table-hover tbody tr:hover {
+    background-color: #f8fafc;
+}
+
+/* =========================================
+   BADGES
+========================================= */
+
+.badge {
+    border-radius: 999px;
+    padding: 8px 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+/* =========================================
+   DOCUMENT BLOCKS
+========================================= */
+
+.document-card {
+    border: 1px solid #eef2f7;
+    border-radius: 20px;
+
+    padding: 24px;
+
+    transition:
+            transform 0.2s ease,
+            box-shadow 0.2s ease,
+            border-color 0.2s ease;
+}
+
+.document-card:hover {
+    transform: translateY(-2px);
+
+    border-color: #dbeafe;
+
+    box-shadow:
+            0 10px 30px rgba(59, 130, 246, 0.08);
+}
+
+/* =========================================
+   FORMS
+========================================= */
+
+.form-control,
+.form-select {
+    border-radius: 14px;
+    border: 1px solid #dbe3ec;
+
+    padding: 12px 14px;
+
+    transition:
+            border-color 0.2s ease,
+            box-shadow 0.2s ease;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: #3b82f6;
+
+    box-shadow:
+            0 0 0 4px rgba(59, 130, 246, 0.10);
+}
+
+/* =========================================
+   ALERTS
+========================================= */
+
+.alert {
+    border: none;
+    border-radius: 18px;
+
+    padding: 16px 20px;
+
+    box-shadow:
+            0 4px 14px rgba(15, 23, 42, 0.05);
+}
+
+/* =========================================
+   BORDERS
+========================================= */
+
+.rounded-4 {
+    border-radius: 20px !important;
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 768px) {
+
+    .dashboard-btn {
+        width: 100%;
+    }
+
+    .document-card {
+        padding: 18px;
+    }
+
+    .table-responsive {
+        border-radius: 18px;
+    }
+
+}

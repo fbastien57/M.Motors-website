@@ -41,7 +41,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
 
                         // public
-                        .requestMatchers("/", "/register", "/login", "/css/**", "/js/**" , "/image/**", "/fragments/**", "/public/**" , "/uploads/**", "/documents/**").permitAll()
+                        .requestMatchers("/", "/register", "/login", "/css/**", "/js/**" , "/image/**", "/fragments/**", "/public/**" , "/error", "/uploads/public-documents/**", "/uploads/vehicles/**").permitAll()
 
                         // client , gestionnaire et admin
                         .requestMatchers("/client/**").hasAnyRole("CLIENT","ADMIN", "GESTIONNAIRE")

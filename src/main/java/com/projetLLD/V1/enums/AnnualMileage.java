@@ -16,4 +16,9 @@ public enum AnnualMileage {
     public int getKm() {
         return km;
     }
+
+    public String getLabel() {
+        return String.format("%,d km", km)
+                .replace(",", " ");
+    }
 }

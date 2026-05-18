@@ -57,7 +57,7 @@
                 <select name="duration" class="form-select">
                     <option th:each="d : ${vehicle.rental.allowedDurations}"
                             th:value="${d}"
-                            th:text="${d}">
+                            th:text="${d.label}">
                     </option>
                 </select>
             </div>
@@ -67,7 +67,7 @@
                 <select name="kmPerYear" class="form-select">
                     <option th:each="k : ${vehicle.rental.allowedKmPerYear}"
                             th:value="${k}"
-                            th:text="${k}">
+                            th:text="${k.label}">
                     </option>
                 </select>
             </div>

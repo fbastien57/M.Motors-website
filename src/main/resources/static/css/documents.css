@@ -1,0 +1,35 @@
+.dashboard-card {
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+    transition: 0.25s ease;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.10);
+}
+
+.dashboard-icon {
+    font-size: 2rem;
+}
+
+.dashboard-btn {
+    border-radius: 12px;
+    padding: 12px 20px;
+    font-weight: 600;
+}
+
+.table {
+    margin-bottom: 0;
+}
+
+.form-control,
+.form-select {
+    border-radius: 12px;
+    padding: 12px;
+}
+
+.btn-sm {
+    border-radius: 10px;
+}

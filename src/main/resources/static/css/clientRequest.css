@@ -1,0 +1,33 @@
+.request-card {
+    transition: all 0.25s ease;
+}
+
+.request-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 1rem 2rem rgba(0,0,0,0.08) !important;
+}
+
+.card {
+    border-radius: 20px;
+}
+
+.btn {
+    border-radius: 14px;
+    transition: 0.2s ease;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+}
+
+.badge {
+    font-weight: 600;
+}
+
+.form-control {
+    border-radius: 12px;
+}
+
+.list-group-item {
+    background: transparent;
+}

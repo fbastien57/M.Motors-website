@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="~{fragments/header :: header('Véhicules en location - M.Motors')}"></head>
-
+    <link rel="stylesheet" th:href="@{/css/catalog.css}">
 <body>
 
 <!-- NAVBAR -->
@@ -56,14 +56,16 @@
 
                         <!-- DURÉES -->
                         <p class="text-muted small mb-1">
-                            <span th:each="d : ${vehicle.rental.allowedDurations}"
-                                  th:text="${d.months + 'm '}"></span>
+                            <span th:each="d : ${#lists.sort(vehicle.rental.allowedDurations)}"
+                                  th:text="${d.label + ' '}">
+                            </span>
                         </p>
 
                         <!-- KM -->
                         <p class="text-muted small">
-                            <span th:each="k : ${vehicle.rental.allowedKmPerYear}"
-                                  th:text="${k.km + 'km '}"></span>
+                            <span th:each="k : ${#lists.sort(vehicle.rental.allowedKmPerYear)}"
+                                  th:text="${k.label + ' '}">
+                            </span>
                         </p>
 
                         <!-- BADGE -->
@@ -100,16 +102,6 @@
 <div th:replace="~{fragments/footer :: footer}"></div>
 
 <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
-
-<style>
-    .hover-scale {
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    .hover-scale:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-    }
-</style>
 
 </body>
 </html>

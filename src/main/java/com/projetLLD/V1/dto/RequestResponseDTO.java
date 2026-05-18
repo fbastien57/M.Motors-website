@@ -13,7 +13,10 @@ import lombok.Setter;
 public class RequestResponseDTO {
 
     private Long id;
+
     private RequestType type;
+
     private RequestStatus status;
+
     private Double totalPrice;
 }

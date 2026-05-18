@@ -48,14 +48,16 @@
 
                     <p class="small text-muted">
                         Durées :
-                        <span th:each="d : ${vehicle.rental.allowedDurations}"
-                              th:text="${d.months + 'm '}"></span>
+                        <span th:each="d : ${#lists.sort(vehicle.rental.allowedDurations)}"
+                              th:text="${d.label + ' '}">
+                        </span>
                     </p>
 
                     <p class="text-muted small">
                         km :
-                        <span th:each="k : ${vehicle.rental.allowedKmPerYear}"
-                              th:text="${k.km + 'km '}"></span>
+                        <span th:each="k : ${#lists.sort(vehicle.rental.allowedKmPerYear)}"
+                              th:text="${k.label + ' '}">
+                        </span>
                     </p>
 
                     <p><strong>Apport :</strong>
@@ -65,8 +67,8 @@
                     <hr>
 
                     <ul class="list-unstyled">
-                        <li><strong>Carburant :</strong> <span th:text="${vehicle.fuelType}"></span></li>
-                        <li><strong>Boîte :</strong> <span th:text="${vehicle.gearbox}"></span></li>
+                        <li><strong>Carburant :</strong> <span th:text="${vehicle.fuelType.label}"></span></li>
+                        <li><strong>Boîte :</strong> <span th:text="${vehicle.gearbox.label}"></span></li>
                     </ul>
 
                     <hr>
@@ -119,7 +121,7 @@
                     <select id="km" class="form-select">
                         <option th:each="k : ${vehicle.rental.allowedKmPerYear}"
                                 th:value="${k.km}"
-                                th:text="${k.km + ' km'}"></option>
+                                th:text="${k.km + 'km'}"></option>
                     </select>
                 </div>
 

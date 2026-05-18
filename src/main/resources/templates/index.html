@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/header :: header('Accueil - M.Motors')}"></head>
+<head th:replace="~{fragments/header :: header('Accueil - M.Motors')}">
+</head>
 
 <body>
 <!-- Navbar -->
@@ -103,17 +104,5 @@
 
 <!-- Bootstrap JS -->
 <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
-
-<!-- Styles supplémentaires pour hover effet -->
-<style>
-    .hover-scale {
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    .hover-scale:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-    }
-</style>
-
 </body>
 </html>
