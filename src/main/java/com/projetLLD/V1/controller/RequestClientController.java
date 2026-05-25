@@ -5,6 +5,7 @@ import com.projetLLD.V1.dto.CreateRequestDTO;
 import com.projetLLD.V1.entity.Request;
 import com.projetLLD.V1.entity.User;
 import com.projetLLD.V1.entity.Vehicle;
+import com.projetLLD.V1.exception.VehicleNotFoundException;
 import com.projetLLD.V1.repository.VehicleRepository;
 import com.projetLLD.V1.service.RequestService;
 import lombok.RequiredArgsConstructor;
@@ -52,7 +53,7 @@ public class RequestClientController {
     public String showSaleRequest(@PathVariable Long vehicleId, Model model) {
 
         Vehicle vehicle = vehicleRepository.findById(vehicleId)
-                .orElseThrow();
+                .orElseThrow(() -> new VehicleNotFoundException("Vehicle not found"));
 
         model.addAttribute("vehicle", vehicle);
 

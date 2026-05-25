@@ -40,6 +40,22 @@ public class FileStorageService {
 
     public void delete(String filePath) {
 
+        Path basePath = Paths.get(baseDir).toAbsolutePath().normalize();
+        Path path = Paths.get(filePath).toAbsolutePath().normalize();
+
+        if (!path.startsWith(basePath)) {
+            throw new RuntimeException("Accès fichier interdit");
+        }
+
+        try {
+            Files.deleteIfExists(path);
+        } catch (Exception e) {
+            throw new RuntimeException("Erreur suppression fichier : " + filePath, e);
+        }
+    }
+
+   /* public void delete(String filePath) {
+
         try {
             Path path = Paths.get(filePath);
 
@@ -53,5 +69,5 @@ public class FileStorageService {
         } catch (Exception e) {
             throw new RuntimeException("Erreur suppression fichier : " + filePath, e);
         }
-    }
+    }*/
 }

@@ -17,7 +17,7 @@ public class DocumentManagerController {
 
     private final DocumentService documentService;
 
-    // LISTE ADMIN
+    // LISTE GESTIONNAIRE , ADMIN
     @GetMapping
     public String list(Model model) {
 
@@ -26,20 +26,6 @@ public class DocumentManagerController {
         model.addAttribute("dto", new DocumentDTO());
 
         return "manager/document/list";
-    }
-
-    @GetMapping("/{id}")
-    public String details(@PathVariable Long id, Model model) {
-
-        Document doc = documentService.findAll()
-                .stream()
-                .filter(d -> d.getId().equals(id))
-                .findFirst()
-                .orElseThrow();
-
-        model.addAttribute("document", doc);
-
-        return "manager/document/details";
     }
 
     // UPLOAD

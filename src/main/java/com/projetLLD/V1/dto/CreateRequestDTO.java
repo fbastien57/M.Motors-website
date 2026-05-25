@@ -3,6 +3,7 @@ package com.projetLLD.V1.dto;
 import com.projetLLD.V1.enums.AnnualMileage;
 import com.projetLLD.V1.enums.RentalDuration;
 import com.projetLLD.V1.enums.RequestType;
+import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -16,8 +17,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CreateRequestDTO {
 
+    @NotNull
     private Long vehicleId;
 
+    @NotNull
     private RequestType type;
 
     private List<Long> optionIds = new ArrayList<>();
