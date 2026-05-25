@@ -1,5 +1,6 @@
 HELP.md
 target/
+*.jar
 .mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
@@ -42,3 +43,5 @@ build/
 .DS_Store
 
 uploads/
+
+app.jar
