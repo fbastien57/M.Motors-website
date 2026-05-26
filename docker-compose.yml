@@ -9,8 +9,8 @@ services:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
 
-    ports:
-      - "3306:3306"
+    expose:
+      - "3306"
 
     volumes:
       - mysql_data:/var/lib/mysql
@@ -24,7 +24,7 @@ services:
       - mysql
 
     ports:
-      - "8080:8080"
+      - "127.0.0.1:8080:8080"
 
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/vehicules
